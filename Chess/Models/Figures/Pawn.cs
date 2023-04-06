@@ -1,7 +1,6 @@
 ﻿namespace Chess.Models
 {
-    public class SquareField : IField
+    public class Pawn : IChess
     {
-
     }
 }

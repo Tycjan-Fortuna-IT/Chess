@@ -1,4 +1,4 @@
-﻿namespace Chess.Models.API
+﻿namespace Chess.Models
 {
     public interface IField
     {

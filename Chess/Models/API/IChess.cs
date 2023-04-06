@@ -1,6 +1,6 @@
 ﻿namespace Chess.Models
 {
-    public class SquareField : IField
+    public interface IChess
     {
 
     }
