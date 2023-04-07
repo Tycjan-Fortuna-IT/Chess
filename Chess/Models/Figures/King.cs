@@ -2,6 +2,6 @@
 {
     public class King : IChess
     {
-
+        public Field Field { get; set; }
     }
 }

@@ -2,15 +2,7 @@
 {
     public class Bishop : IChess
     {
-        public int PosX { get; set; }
-
-        public int PosY { get; set; }
-
-        public Bishop(int PosX, int PosY)
-        {
-            this.PosX = PosX;
-            this.PosY = PosY;
-        }
+        public Field Field { get; set; }
 
         /// <summary>
         ///     List contatining all allowed moves that Bishop can do.
@@ -18,23 +10,44 @@
         private readonly List<Tuple<int, int>> AllowedMovePatterns = new List<Tuple<int, int>>
         {
             new Tuple<int, int>(-1, -1),
-            new Tuple<int, int> (-1, 1),
-            new Tuple<int, int> (1, -1),
-            new Tuple<int, int> (1, 1)
+            new Tuple<int, int>(-1, 1),
+            new Tuple<int, int>(1, -1),
+            new Tuple<int, int>(1, 1)
         };
+
+        public Bishop()
+        {
+
+        }
 
         /// <summary>
         ///     Returns a list of all Fields to which Bishop can go based on current position.
         /// </summary>
         /// <returns>List<IField></returns>
-        public List<IField> GetAvailablePositions()
+        public List<Field> GetAvailablePositions()
         {
+            List<Field> AvailablePositions = new List<Field>();
+
             foreach (Tuple<int, int> Pattern in AllowedMovePatterns)
             {
+                int x = Field.PosX + Pattern.Item1;
+                int y = Field.PosY + Pattern.Item2;
 
+                while (Field.Board.IsPositionInBounds(x, y))
+                {
+                    Field IteratedField = Field.Board.GetField(x, y);
+
+                    if (IteratedField.IsEmpty())
+                    {
+                        AvailablePositions.Add(IteratedField);
+                    }
+
+                    x += Pattern.Item1;
+                    y += Pattern.Item2;
+                }
             }
 
-            return new List<IField>();
+            return AvailablePositions;
         }
     }
 }

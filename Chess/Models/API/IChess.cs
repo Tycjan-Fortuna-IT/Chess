@@ -2,6 +2,6 @@
 {
     public interface IChess
     {
-
+        public Field Field { get; set; }
     }
 }

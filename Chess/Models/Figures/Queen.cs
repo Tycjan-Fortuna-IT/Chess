@@ -2,5 +2,6 @@
 {
     public class Queen : IChess
     {
+        public Field Field { get; set; }
     }
 }
