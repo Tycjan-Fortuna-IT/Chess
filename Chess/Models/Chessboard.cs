@@ -10,7 +10,7 @@
 
         public string Uuid { get; }
 
-        public Field[] Fields = new Field[AMOUNT_OF_FIELDS];
+        private Field[] Fields = new Field[AMOUNT_OF_FIELDS];
 
         public Chessboard()
         {
@@ -19,21 +19,31 @@
 
             for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
             {
-                this.Fields[i] = new Field();
+                this.Fields[i] = new Field(this, i % WIDTH, i / HEIGHT);
             }
         }
 
         public void Display()
         {
-            System.Console.WriteLine("12");
+            for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
+            {
+                if (i % WIDTH == 0 && i != 0)
+                {
+                    System.Console.WriteLine(' ');
+                }
 
-            foreach (var field in this.Fields) 
-                System.Console.WriteLine(field.ToString());
+                this.Fields[i].Display();
+            }
         }
 
         public bool IsPositionInBounds(int x, int y)
         {
             return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
+        }
+
+        public Field GetField(int x, int y)
+        {
+            return Fields[x + WIDTH * y];
         }
     }
 }
