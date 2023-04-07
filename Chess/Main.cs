@@ -10,13 +10,13 @@ namespace Chess
 
             //chessboard.Display();
 
-            Bishop bishop = new Bishop();
+            Knight knight = new Knight();
 
-            chessboard.GetField(0, 7).AddChess(bishop);
+            chessboard.GetField(3, 3).AddChess(knight);
 
-            System.Console.WriteLine(bishop.GetAvailablePositions().Count());
+            System.Console.WriteLine(knight.GetAvailablePositions().Count());
 
-            foreach (var Field in bishop.GetAvailablePositions())
+            foreach (var Field in knight.GetAvailablePositions())
             {
                 Field.RemoveChess();
                 Field.AddChess(new King());

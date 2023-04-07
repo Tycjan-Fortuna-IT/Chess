@@ -15,11 +15,6 @@
             new Tuple<int, int>(1, 1)
         };
 
-        public Bishop()
-        {
-
-        }
-
         /// <summary>
         ///     Returns a list of all Fields to which Bishop can go based on current position.
         /// </summary>
