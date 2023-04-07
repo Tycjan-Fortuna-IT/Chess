@@ -2,8 +2,6 @@
 {
     public interface IBoard
     {
-        string Uuid { get; }
-
-        IField[] Fields { get; set; }
+        void display();
     }
 }
