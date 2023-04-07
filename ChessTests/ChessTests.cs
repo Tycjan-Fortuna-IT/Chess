@@ -169,5 +169,118 @@ namespace ChessTests
 
             chessboard.GetField(3, 3).RemoveChess();
         }
+
+        [TestMethod]
+        public void KnightAllowedPositionsTest()
+        {
+            Chessboard chessboard = new Chessboard();
+
+            Knight knight = new Knight();
+
+            // ------ LEFT UP CORNER ------
+            chessboard.GetField(0, 0).AddChess(knight);
+
+            List<Field> AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 2)));
+
+            chessboard.GetField(0, 0).RemoveChess();
+
+            // ------ RIGHT UP CORNER ------
+            chessboard.GetField(7, 0).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(6, 2)));
+
+            chessboard.GetField(7, 0).RemoveChess();
+
+            // ------ LEFT DOWN CORNER ------
+            chessboard.GetField(0, 7).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 5)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 6)));
+
+            chessboard.GetField(0, 7).RemoveChess();
+
+            // ------ RIGHT DOWN CORNER ------
+            chessboard.GetField(7, 7).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(6, 5)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 6)));
+
+            chessboard.GetField(7, 7).RemoveChess();
+
+            // ------ TOP BORDER CENTER ------
+            chessboard.GetField(3, 0).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 2)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(4, 2)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 1)));
+
+            chessboard.GetField(3, 0).RemoveChess();
+
+            // ------ LEFT BORDER CENTER ------
+            chessboard.GetField(0, 3).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 2)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 4)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 5)));
+
+            chessboard.GetField(0, 3).RemoveChess();
+
+            // ------ DOWN BORDER CENTER ------
+            chessboard.GetField(3, 7).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 6)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 5)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(4, 5)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 6)));
+
+            chessboard.GetField(3, 7).RemoveChess();
+
+            // ------ RIGHT BORDER CENTER ------
+            chessboard.GetField(7, 3).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(6, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 2)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 4)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(6, 5)));
+
+            chessboard.GetField(7, 3).RemoveChess();
+
+            // ------ CENTER ------
+            chessboard.GetField(3, 3).AddChess(knight);
+
+            AvailablePositions = knight.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 2)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(4, 1)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 2)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(5, 4)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(4, 5)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(2, 5)));
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(1, 4)));
+
+            chessboard.GetField(3, 3).RemoveChess();
+
+        }
     }
 }
