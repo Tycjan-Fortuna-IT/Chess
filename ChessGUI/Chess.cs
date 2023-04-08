@@ -1,4 +1,5 @@
 using Chess.Models;
+using ChessGUI.Properties;
 
 namespace ChessGUI
 {
@@ -56,22 +57,31 @@ namespace ChessGUI
             Field Field = Board.GetField(FieldPositionX, FieldPositionY);
 
             IChess Chess = new Bishop(ColorEnum.White);
-       
-            switch(comboBox1.SelectedItem)
+            var Image = Properties.Resources.BishopWhite;
+
+            switch (comboBox1.SelectedItem)
             {
                 case "Bishop":
-                    Chess = new Bishop(ColorEnum.White); break;
+                    Chess = new Bishop(ColorEnum.White);
+                    Image = Properties.Resources.BishopWhite; break;
                 case "King":
-                    Chess = new King(ColorEnum.White); break;
+                    Chess = new King(ColorEnum.White);
+                    Image = Properties.Resources.KingWhite; break;
                 case "Knight":
-                    Chess = new Knight(ColorEnum.White); break;
+                    Chess = new Knight(ColorEnum.White);
+                    Image = Properties.Resources.KnightWhite; break;
                 case "Pawn":
-                    Chess = new Pawn(ColorEnum.White); break;
+                    Chess = new Pawn(ColorEnum.White);
+                    Image = Properties.Resources.PawnWhite; break;
                 case "Queen":
-                    Chess = new Queen(ColorEnum.White); break;
+                    Chess = new Queen(ColorEnum.White);
+                    Image = Properties.Resources.QueenWhite; break;
                 case "Rook":
-                    Chess = new Rook(ColorEnum.White); break;
+                    Chess = new Rook(ColorEnum.White);
+                    Image = Properties.Resources.RookWhite; break;
             }
+
+            ClickedButton.Image = Image;
 
             Field.AddChess(Chess);
 
@@ -93,6 +103,7 @@ namespace ChessGUI
                         Field.RemoveChess();
 
                     Buttons[i, j].Text = "";
+                    Buttons[i, j].Image = null;
                 }
             }
         }
