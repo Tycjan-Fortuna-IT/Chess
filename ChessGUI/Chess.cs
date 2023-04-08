@@ -25,6 +25,8 @@ namespace ChessGUI
             int ButtonWidth = panel1.Width / Chessboard.WIDTH;
             int ButtonHeight = panel1.Height / Chessboard.HEIGHT;
 
+            int counter = 1;
+
             for (int i = 0; i < Chessboard.WIDTH; i++)
             {
                 for (int j = 0; j < Chessboard.HEIGHT; j++)
@@ -36,12 +38,20 @@ namespace ChessGUI
 
                     Buttons[i, j].Click += ClickChessboardField;
 
+                    Buttons[i, j].BackColor = counter % 2 == 0 ? Color.Gray : Color.White;
+
+                    Buttons[i, j].Margin = new Padding(0);
+                    Buttons[i, j].Padding = new Padding(0);
+
                     panel1.Controls.Add(Buttons[i, j]);
 
                     Buttons[i, j].Location = new Point(i * ButtonWidth, j * ButtonHeight);
 
                     Buttons[i, j].Text = i + "|" + j;
+                    counter++;
+
                 }
+                counter++;
             }
         }
 
