@@ -7,7 +7,7 @@
         public ColorEnum Color { get; }
 
         /// <summary>
-        ///     List contatining all allowed moves that Rook can do.
+        ///     List contatining all allowed moves that Queen can do.
         /// </summary>
         private readonly List<Tuple<int, int>> AllowedMovePatterns = new List<Tuple<int, int>>
         {
@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        ///     Returns a list of all Fields to which Rook can go based on current position.
+        ///     Returns a list of all Fields to which Queen can go based on current position.
         /// </summary>
         /// <returns>List<IField></returns>
         public List<Field> GetAvailablePositions()
