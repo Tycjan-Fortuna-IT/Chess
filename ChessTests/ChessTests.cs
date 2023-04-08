@@ -886,15 +886,27 @@ namespace ChessTests
         [TestMethod]
         public void PawnAllowedPositionsTest()
         {
+            Chessboard chessboard = new Chessboard();
+
+            Pawn pawnWhite = new Pawn(ColorEnum.White);
+            Pawn pawnBlack = new Pawn(ColorEnum.Black);
+
             // ------ LEFT UP CORNER ------
-            // ------ RIGHT UP CORNER ------
-            // ------ LEFT DOWN CORNER ------
-            // ------ RIGHT DOWN CORNER ------
-            // ------ TOP BORDER CENTER ------
-            // ------ LEFT BORDER CENTER ------
-            // ------ DOWN BORDER CENTER ------
-            // ------ RIGHT BORDER CENTER ------
-            // ------ CENTER ------
+            chessboard.GetField(0, 0).AddChess(pawnWhite);
+
+            List<Field> AvailablePositions = pawnWhite.GetAvailablePositions();
+
+            Assert.AreEqual(AvailablePositions.Count(), 0);
+
+            chessboard.GetField(0, 0).RemoveChess();
+
+            chessboard.GetField(0, 0).AddChess(pawnBlack);
+
+            AvailablePositions = pawnBlack.GetAvailablePositions();
+
+            Assert.IsTrue(AvailablePositions.Contains(chessboard.GetField(0, 1)));
+
+            chessboard.GetField(0, 0).RemoveChess();
         }
     }
 }
