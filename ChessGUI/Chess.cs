@@ -75,22 +75,24 @@ namespace ChessGUI
 
             LastClicked = Board.GetField(FieldPositionX, FieldPositionY);
 
-            IChess Chess = new Bishop(ColorEnum.White);
+            ColorEnum Color = checkBox1.Checked ? ColorEnum.Black : ColorEnum.White;
+
+            IChess Chess = new Bishop(Color);
 
             switch (comboBox1.SelectedItem)
             {
                 case "Bishop":
-                    Chess = new Bishop(ColorEnum.White); break;
+                    Chess = new Bishop(Color); break;
                 case "King":
-                    Chess = new King(ColorEnum.White); break;
+                    Chess = new King(Color); break;
                 case "Knight":
-                    Chess = new Knight(ColorEnum.White); break;
+                    Chess = new Knight(Color); break;
                 case "Pawn":
-                    Chess = new Pawn(ColorEnum.White); break;
+                    Chess = new Pawn(Color); break;
                 case "Queen":
-                    Chess = new Queen(ColorEnum.White); break;
+                    Chess = new Queen(Color); break;
                 case "Rook":
-                    Chess = new Rook(ColorEnum.White); break;
+                    Chess = new Rook(Color); break;
             }
 
             ClickedButton.Image = Chess.Texture;
@@ -136,6 +138,21 @@ namespace ChessGUI
                     Buttons[i, j].Image = null;
                 }
             }
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

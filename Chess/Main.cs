@@ -9,9 +9,11 @@ namespace Chess
             Chessboard chessboard = new Chessboard();
 
             //chessboard.Display();
-            FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
+            //FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
 
-            WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
+            //WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
+
+            chessboard.SaveToXML();
 
             //Bishop bishop = new Bishop(ColorEnum.White);
 
