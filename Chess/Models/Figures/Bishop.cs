@@ -4,6 +4,8 @@
     {
         public Field Field { get; set; }
 
+        public ColorEnum Color { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Bishop can do.
         /// </summary>
@@ -14,6 +16,11 @@
             new Tuple<int, int>(1, -1),
             new Tuple<int, int>(1, 1)
         };
+
+        public Bishop(ColorEnum Color)
+        {
+            this.Color = Color;
+        }
 
         /// <summary>
         ///     Returns a list of all Fields to which Bishop can go based on current position.

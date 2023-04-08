@@ -4,6 +4,8 @@
     {
         public Field Field { get; set; }
 
+        public ColorEnum Color { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that King can do.
         /// </summary>
@@ -18,6 +20,11 @@
             new Tuple<int, int>(1, 0),
             new Tuple<int, int>(1, 1),
         };
+
+        public King(ColorEnum Color)
+        {
+            this.Color = Color;
+        }
 
         /// <summary>
         ///     Returns a list of all Fields to which King can go based on current position.

@@ -10,7 +10,7 @@ namespace ChessTests
         {
             Chessboard chessboard = new Chessboard();
 
-            Bishop bishop = new Bishop();
+            Bishop bishop = new Bishop(ColorEnum.White);
 
             chessboard.GetField(0, 0).AddChess(bishop);
 
@@ -26,7 +26,7 @@ namespace ChessTests
         {
             Chessboard chessboard = new Chessboard();
 
-            Bishop bishop = new Bishop();
+            Bishop bishop = new Bishop(ColorEnum.White);
 
             // ------ LEFT UP CORNER ------
             chessboard.GetField(0, 0).AddChess(bishop);
@@ -175,7 +175,7 @@ namespace ChessTests
         {
             Chessboard chessboard = new Chessboard();
 
-            Knight knight = new Knight();
+            Knight knight = new Knight(ColorEnum.White);
 
             // ------ LEFT UP CORNER ------
             chessboard.GetField(0, 0).AddChess(knight);
@@ -287,7 +287,7 @@ namespace ChessTests
         {
             Chessboard chessboard = new Chessboard();
 
-            Rook rook = new Rook();
+            Rook rook = new Rook(ColorEnum.White);
 
             // ------ LEFT UP CORNER ------
             chessboard.GetField(0, 0).AddChess(rook);
@@ -493,7 +493,7 @@ namespace ChessTests
         {
             Chessboard chessboard = new Chessboard();
 
-            Queen queen = new Queen();
+            Queen queen = new Queen(ColorEnum.White);
 
             // ------ LEFT UP CORNER ------
             chessboard.GetField(0, 0).AddChess(queen);
@@ -768,7 +768,7 @@ namespace ChessTests
         {
             Chessboard chessboard = new Chessboard();
 
-            King king = new King();
+            King king = new King(ColorEnum.White);
 
             // ------ LEFT UP CORNER ------
             chessboard.GetField(0, 0).AddChess(king);

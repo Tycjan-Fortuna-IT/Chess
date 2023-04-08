@@ -3,5 +3,7 @@
     public interface IChess
     {
         public Field Field { get; set; }
+
+        public ColorEnum Color { get; }
     }
 }

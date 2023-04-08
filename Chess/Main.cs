@@ -10,16 +10,18 @@ namespace Chess
 
             //chessboard.Display();
 
-            Knight knight = new Knight();
+            King king = new King(ColorEnum.White);
 
-            chessboard.GetField(3, 3).AddChess(knight);
+            Bishop bishop = new Bishop(ColorEnum.White);
 
-            System.Console.WriteLine(knight.GetAvailablePositions().Count());
+            chessboard.GetField(3, 3).AddChess(king);
 
-            foreach (var Field in knight.GetAvailablePositions())
+            System.Console.WriteLine(king.GetAvailablePositions().Count());
+
+            foreach (var Field in king.GetAvailablePositions())
             {
                 Field.RemoveChess();
-                Field.AddChess(new King());
+                Field.AddChess(new King(ColorEnum.White));
             }
 
             //chessboard.Fields[14].AddChess(new Bishop());

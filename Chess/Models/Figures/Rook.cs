@@ -4,6 +4,8 @@
     {
         public Field Field { get; set; }
 
+        public ColorEnum Color { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Rook can do.
         /// </summary>
@@ -14,6 +16,11 @@
             new Tuple<int, int>(1, 0),
             new Tuple<int, int>(0, 1)
         };
+
+        public Rook(ColorEnum Color)
+        {
+            this.Color = Color;
+        }
 
         /// <summary>
         ///     Returns a list of all Fields to which Rook can go based on current position.

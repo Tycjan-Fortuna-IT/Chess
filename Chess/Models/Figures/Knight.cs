@@ -4,6 +4,8 @@
     {
         public Field Field { get; set; }
 
+        public ColorEnum Color { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Knight can do.
         /// </summary>
@@ -18,6 +20,11 @@
             new Tuple<int, int>(-1, 2),
             new Tuple<int, int>(-1, -2)
         };
+
+        public Knight(ColorEnum Color)
+        { 
+            this.Color = Color;
+        }
 
         /// <summary>
         ///     Returns a list of all Fields to which Knight can go based on current position.
