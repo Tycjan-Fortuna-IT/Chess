@@ -2,8 +2,10 @@
 {
     public interface IChess
     {
-        public Field Field { get; set; }
+        Field Field { get; set; }
 
-        public ColorEnum Color { get; }
+        ColorEnum Color { get; }
+
+        List<Field> GetAvailablePositions();
     }
 }
