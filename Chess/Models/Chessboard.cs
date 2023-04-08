@@ -2,9 +2,9 @@
 {
     public class Chessboard
     {
-        private static readonly short WIDTH = 8;
+        public static readonly short WIDTH = 8;
 
-        private static readonly short HEIGHT = 8;
+        public static readonly short HEIGHT = 8;
 
         private static readonly int AMOUNT_OF_FIELDS = WIDTH * HEIGHT;
 
