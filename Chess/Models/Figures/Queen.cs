@@ -6,6 +6,8 @@
 
         public ColorEnum Color { get; }
 
+        public System.Drawing.Bitmap Texture { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Queen can do.
         /// </summary>
@@ -24,6 +26,9 @@
         public Queen(ColorEnum Color)
         {
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.QueenWhite : Properties.Resources.QueenBlack;
         }
 
         /// <summary>

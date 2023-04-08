@@ -1,5 +1,4 @@
 using Chess.Models;
-using ChessGUI.Properties;
 
 namespace ChessGUI
 {
@@ -7,12 +6,22 @@ namespace ChessGUI
     {
         static Chessboard Board = new Chessboard();
 
+        private FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
+        private FigureSet BlackFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.Black);
+
         private Button[,] Buttons = new Button[Chessboard.WIDTH, Chessboard.HEIGHT];
+
+        private Field LastClicked;
 
         public Chess()
         {
             InitializeComponent();
             CreateChessboardGrid();
+
+            this.WhiteFigureSet.PlaceFiguresOnBoard(Board);
+            this.BlackFigureSet.PlaceFiguresOnBoard(Board);
+
+            this.DrawFiguresOnBoard();
         }
 
         private void Chess_Load(object sender, EventArgs e)
@@ -36,7 +45,7 @@ namespace ChessGUI
                     Buttons[i, j].Height = ButtonHeight;
                     Buttons[i, j].Width = ButtonWidth;
 
-                    Buttons[i, j].Click += ClickChessboardField;
+                    Buttons[i, j].Click += this.ClickChessboardField;
 
                     Buttons[i, j].BackColor = counter % 2 == 0 ? Color.Gray : Color.White;
 
@@ -47,7 +56,7 @@ namespace ChessGUI
 
                     Buttons[i, j].Location = new Point(i * ButtonWidth, j * ButtonHeight);
 
-                    Buttons[i, j].Text = i + "|" + j;
+                    //Buttons[i, j].Text = i + "|" + j;
                     counter++;
 
                 }
@@ -57,47 +66,58 @@ namespace ChessGUI
 
         private void ClickChessboardField(object sender, EventArgs args)
         {
-            CleanChessboardFields();
+            this.CleanChessboardFields();
 
             Button ClickedButton = (Button)sender;
 
             int FieldPositionX = ClickedButton.Location.X / (panel1.Width / Chessboard.WIDTH);
             int FieldPositionY = ClickedButton.Location.Y / (panel1.Height / Chessboard.HEIGHT);
 
-            Field Field = Board.GetField(FieldPositionX, FieldPositionY);
+            LastClicked = Board.GetField(FieldPositionX, FieldPositionY);
 
             IChess Chess = new Bishop(ColorEnum.White);
-            var Image = Properties.Resources.BishopWhite;
 
             switch (comboBox1.SelectedItem)
             {
                 case "Bishop":
-                    Chess = new Bishop(ColorEnum.White);
-                    Image = Properties.Resources.BishopWhite; break;
+                    Chess = new Bishop(ColorEnum.White); break;
                 case "King":
-                    Chess = new King(ColorEnum.White);
-                    Image = Properties.Resources.KingWhite; break;
+                    Chess = new King(ColorEnum.White); break;
                 case "Knight":
-                    Chess = new Knight(ColorEnum.White);
-                    Image = Properties.Resources.KnightWhite; break;
+                    Chess = new Knight(ColorEnum.White); break;
                 case "Pawn":
-                    Chess = new Pawn(ColorEnum.White);
-                    Image = Properties.Resources.PawnWhite; break;
+                    Chess = new Pawn(ColorEnum.White); break;
                 case "Queen":
-                    Chess = new Queen(ColorEnum.White);
-                    Image = Properties.Resources.QueenWhite; break;
+                    Chess = new Queen(ColorEnum.White); break;
                 case "Rook":
-                    Chess = new Rook(ColorEnum.White);
-                    Image = Properties.Resources.RookWhite; break;
+                    Chess = new Rook(ColorEnum.White); break;
             }
 
-            ClickedButton.Image = Image;
+            ClickedButton.Image = Chess.Texture;
 
-            Field.AddChess(Chess);
+            LastClicked.AddChess(Chess);
 
             foreach (var Position in Chess.GetAvailablePositions())
             {
                 Buttons[Position.PosX, Position.PosY].Text = "Legal";
+            }
+
+            this.DrawFiguresOnBoard();
+        }
+
+        private void DrawFiguresOnBoard()
+        {
+            for (int i = 0; i < Chessboard.WIDTH; i++)
+            {
+                for (int j = 0; j < Chessboard.HEIGHT; j++)
+                {
+                    Field Field = Board.GetField(i, j);
+
+                    if (!Field.IsEmpty())
+                    {
+                        Buttons[i, j].Image = Field.Chess.Texture;
+                    }
+                }
             }
         }
 
@@ -109,8 +129,8 @@ namespace ChessGUI
                 {
                     Field Field = Board.GetField(i, j);
 
-                    if (!Field.IsEmpty())
-                        Field.RemoveChess();
+                    if (LastClicked is not null)
+                        LastClicked.RemoveChess();
 
                     Buttons[i, j].Text = "";
                     Buttons[i, j].Image = null;

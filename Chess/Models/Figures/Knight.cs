@@ -6,6 +6,8 @@
 
         public ColorEnum Color { get; }
 
+        public System.Drawing.Bitmap Texture { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Knight can do.
         /// </summary>
@@ -24,6 +26,9 @@
         public Knight(ColorEnum Color)
         { 
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.KnightWhite : Properties.Resources.KnightBlack;
         }
 
         /// <summary>

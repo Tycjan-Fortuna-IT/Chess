@@ -6,6 +6,8 @@
 
         public ColorEnum Color { get; }
 
+        public System.Drawing.Bitmap Texture { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Bishop can do.
         /// </summary>
@@ -20,6 +22,9 @@
         public Bishop(ColorEnum Color)
         {
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.BishopWhite : Properties.Resources.BishopBlack;
         }
 
         /// <summary>

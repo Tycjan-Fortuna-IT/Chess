@@ -6,6 +6,8 @@
 
         public ColorEnum Color { get; }
 
+        public System.Drawing.Bitmap Texture { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that Rook can do.
         /// </summary>
@@ -20,6 +22,9 @@
         public Rook(ColorEnum Color)
         {
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.RookWhite : Properties.Resources.RookBlack;
         }
 
         /// <summary>

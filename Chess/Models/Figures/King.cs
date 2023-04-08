@@ -6,6 +6,8 @@
 
         public ColorEnum Color { get; }
 
+        public System.Drawing.Bitmap Texture { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that King can do.
         /// </summary>
@@ -24,6 +26,9 @@
         public King(ColorEnum Color)
         {
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.KingWhite : Properties.Resources.KingBlack;
         }
 
         /// <summary>
