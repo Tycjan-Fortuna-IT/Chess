@@ -81,11 +81,7 @@ namespace ChessGUI
 
                 if (!LastClickedField.IsEmpty())
                 {
-                    IChess ChessToMove = LastClickedField.Chess;
-
-                    CurrentlyClickedField.AddChess(ChessToMove);
-
-                    LastClicked.RemoveChess();
+                    Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
 
                     LastClicked = null;
                 }
@@ -94,7 +90,7 @@ namespace ChessGUI
             {
                 foreach (var Position in CurrentlyClickedField.Chess.GetAvailablePositions())
                 {
-                    Buttons[Position.PosX, Position.PosY].Text = "Legal";
+                    Buttons[Position.PosX, Position.PosY].BackColor = Color.DarkSeaGreen;
                 }
 
                 LastClicked = CurrentlyClickedField;
@@ -121,6 +117,8 @@ namespace ChessGUI
 
         private void CleanChessboardFields()
         {
+            int counter = 1;
+
             for (int i = 0; i < Chessboard.WIDTH; i++)
             {
                 for (int j = 0; j < Chessboard.HEIGHT; j++)
@@ -129,7 +127,11 @@ namespace ChessGUI
 
                     Buttons[i, j].Text = "";
                     Buttons[i, j].Image = null;
+                    Buttons[i, j].BackColor = counter % 2 == 0 ? Color.Gray : Color.White;
+
+                    counter++;
                 }
+                counter++;
             }
         }
 

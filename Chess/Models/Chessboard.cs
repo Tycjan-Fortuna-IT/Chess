@@ -51,9 +51,23 @@ namespace Chess.Models
             return Fields[x + WIDTH * y];
         }
 
-        public void MoveFromTo(int x1, int y1, int x2, int y2)
+        /// <summary>
+        ///     Move IChess from one Field to second Field if it is allowed.
+        /// </summary>
+        /// <param name="First">First Field from which we want to move</param>
+        /// <param name="Second">Second Field to which we want to move</param>
+        public void MoveFromFieldToField(Field First, Field Second)
         {
+            IChess ChessToMove = First.Chess;
 
+            List<Field> FieldsToMove = ChessToMove.GetAvailablePositions();
+
+            if (FieldsToMove.Contains(Second))
+            {
+                Second.AddChess(ChessToMove);
+
+                First.RemoveChess();
+            }
         }
 
         /// <summary>

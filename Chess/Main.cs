@@ -6,8 +6,13 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            Chessboard chessboard = new Chessboard();
+            //Chessboard chessboard = new Chessboard();
 
+            //chessboard.GetField(1, 1).AddChess(new Bishop(ColorEnum.White));
+
+            //var t = chessboard.GetField(3, 3).CheckForProjectedObstacle(new Tuple<int, int>(-1, -1), ColorEnum.White, 2);
+
+            //System.Console.WriteLine(t);
             //chessboard.Display();
             //FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
 
