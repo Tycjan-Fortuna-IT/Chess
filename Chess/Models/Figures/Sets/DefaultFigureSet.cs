@@ -75,7 +75,7 @@
                 Chessboard.GetField(3, 6).AddChess(Pawn4);
                 Chessboard.GetField(4, 6).AddChess(Pawn5);
                 Chessboard.GetField(5, 6).AddChess(Pawn6);
-                Chessboard.GetField(6, 6).AddChess(Pawn6);
+                Chessboard.GetField(6, 6).AddChess(Pawn7);
                 Chessboard.GetField(7, 6).AddChess(Pawn8);
             }
             else
@@ -149,7 +149,7 @@
                 Chessboard.GetField(3, 1).AddChess(Pawn4);
                 Chessboard.GetField(4, 1).AddChess(Pawn5);
                 Chessboard.GetField(5, 1).AddChess(Pawn6);
-                Chessboard.GetField(6, 1).AddChess(Pawn6);
+                Chessboard.GetField(6, 1).AddChess(Pawn7);
                 Chessboard.GetField(7, 1).AddChess(Pawn8);
             }
         }
