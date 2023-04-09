@@ -2,6 +2,6 @@
 {
     public interface ISerializer
     {
-        void Save(Chessboard Board);
+        void Save(Chessboard Board, string path);
     }
 }

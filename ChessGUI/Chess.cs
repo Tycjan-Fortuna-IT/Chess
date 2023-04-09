@@ -1,4 +1,5 @@
 using Chess.Models;
+using System.Windows.Forms;
 
 namespace ChessGUI
 {
@@ -89,7 +90,7 @@ namespace ChessGUI
             else if (!CurrentlyClickedField.IsEmpty())
             {
                 foreach (var Position in CurrentlyClickedField.Chess.GetAvailablePositions())
-                {                       
+                {
                     Buttons[Position.PosX, Position.PosY].BackColor = !Position.IsEmpty() ?
                         Color.IndianRed : Color.DarkSeaGreen;
                 }
@@ -143,12 +144,22 @@ namespace ChessGUI
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.ValidateNames = true;
+            saveFileDialog1.Filter = "Xml files (*.xml)|*.xml";
 
+            saveFileDialog1.ShowDialog(this);
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string filePath = saveFileDialog1.FileName;
+
+            Board.SaveToXML(filePath);
         }
     }
 }

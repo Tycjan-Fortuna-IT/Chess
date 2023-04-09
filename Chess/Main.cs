@@ -31,7 +31,7 @@ namespace Chess
             chessboard.MoveFromFieldToField(chessboard.GetField(0, 5), chessboard.GetField(0, 6));
             chessboard.Display();
 
-            chessboard.SaveToXML();
+            //chessboard.SaveToXML();
 
             //Bishop bishop = new Bishop(ColorEnum.White);
 

@@ -28,7 +28,8 @@ namespace Chess.Models
                 this.Fields[i] = new Field(this, i % WIDTH, i / HEIGHT);
             }
 
-            this.Serializer = new XMLSerializer("../../../", "History");
+            //this.Serializer = new XMLSerializer("../../../", "History");
+            this.Serializer = new XMLSerializer();
         }
 
         /// <summary>
@@ -81,9 +82,9 @@ namespace Chess.Models
         /// <summary>
         ///     Save current state of the Chessboard into serializer's storage. All moves will be saved.
         /// </summary>
-        public void SaveToXML()
+        public void SaveToXML(string path)
         {
-            this.Serializer.Save(this);
+            this.Serializer.Save(this, path);
         }
     }
 }

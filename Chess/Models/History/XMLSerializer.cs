@@ -4,20 +4,20 @@ namespace Chess.Models.History
 {
     public class XMLSerializer : ISerializer
     {
-        private readonly string path;
+        //private readonly string path;
 
-        private readonly string folder;
+        //private readonly string folder;
 
-        public XMLSerializer(string path, string folder)
-        {
-            this.path = path;
-            this.folder = folder;
-        }
+        //public XMLSerializer(string path, string folder)
+        //{
+        //    this.path = path;
+        //    this.folder = folder;
+        //}
 
         /// <summary>
         ///     Save current state of the Chessboard into XML file. All moves will be saved.
         /// </summary>
-        public void Save(Chessboard Board)
+        public void Save(Chessboard Board, string path)
         {
             // Create a new XML document
             XmlDocument Document = new XmlDocument();
@@ -108,10 +108,12 @@ namespace Chess.Models.History
 
             BoardUuid.InnerText = Board.Uuid;
 
-            string Filename = now.Day + "." + now.Month + "." + now.Year + "_" + now.Hour + "." + now.Minute + "." + now.Second;
+            //string Filename = now.Day + "." + now.Month + "." + now.Year + "_" + now.Hour + "." + now.Minute + "." + now.Second;
 
             // Save the XML document to a file in a folder within the solution
-            string filePath = Path.Combine(path, folder, Filename + ".xml");
+            //string filePath = Path.Combine(path, folder, Filename + ".xml");
+            string filePath = Path.Combine(path);
+
             Document.Save(filePath);
         }
     }
