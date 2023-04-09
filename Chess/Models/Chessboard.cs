@@ -14,6 +14,8 @@ namespace Chess.Models
 
         private Field[] Fields = new Field[AMOUNT_OF_FIELDS];
 
+        private HistoryManager HistoryManager = new HistoryManager();
+
         public Chessboard()
         {
             this.Uuid = Guid.NewGuid().ToString();
@@ -64,6 +66,8 @@ namespace Chess.Models
 
             if (FieldsToMove.Contains(Second))
             {
+                HistoryManager.RegisterMove(First, Second);
+
                 Second.AddChess(ChessToMove);
 
                 First.RemoveChess();
@@ -119,6 +123,46 @@ namespace Chess.Models
             #region MoveHistory
 
             XmlElement History = Document.CreateElement("History");
+            Root.AppendChild(History);
+
+            foreach (Move m in HistoryManager.Moves)
+            {
+                XmlElement Move = Document.CreateElement("Move");
+                History.AppendChild(Move);
+
+                XmlElement Moved = Document.CreateElement("Moved");
+                Move.AppendChild(Moved);
+                Moved.InnerText = m.MovedChess;
+
+                XmlElement From = Document.CreateElement("From");
+                Move.AppendChild(From);
+
+                XmlElement FromX = Document.CreateElement("X");
+                From.AppendChild(FromX);
+                FromX.InnerText = m.FromField.Item1.ToString();
+
+                XmlElement FromY = Document.CreateElement("Y");
+                From.AppendChild(FromY);
+                FromY.InnerText = m.FromField.Item2.ToString();
+
+                XmlElement To = Document.CreateElement("To");
+                Move.AppendChild(To);
+
+                XmlElement ToX = Document.CreateElement("X");
+                To.AppendChild(ToX);
+                ToX.InnerText = m.ToField.Item1.ToString();
+
+                XmlElement ToY = Document.CreateElement("Y");
+                To.AppendChild(ToY);
+                ToY.InnerText = m.ToField.Item2.ToString();
+
+                if (m.CapturedChessName is not null)
+                {
+                    XmlElement Captured = Document.CreateElement("Captured");
+                    Move.AppendChild(Captured);
+                    Captured.InnerText = m.CapturedChessName;
+                }
+            }
 
             #endregion MoveHistory
 

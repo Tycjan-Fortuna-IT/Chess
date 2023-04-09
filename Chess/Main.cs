@@ -6,7 +6,7 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            //Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard();
 
             //chessboard.GetField(1, 1).AddChess(new Bishop(ColorEnum.White));
 
@@ -14,11 +14,24 @@ namespace Chess
 
             //System.Console.WriteLine(t);
             //chessboard.Display();
-            //FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
+            FigureSet BlackFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.Black);
+            FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
 
-            //WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
+            BlackFigureSet.PlaceFiguresOnBoard(chessboard);
+            WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
 
-            //chessboard.SaveToXML();
+            chessboard.MoveFromFieldToField(chessboard.GetField(0, 1), chessboard.GetField(0, 2));
+            chessboard.Display();
+            chessboard.MoveFromFieldToField(chessboard.GetField(0, 2), chessboard.GetField(0, 3));
+            chessboard.Display();
+            chessboard.MoveFromFieldToField(chessboard.GetField(0, 3), chessboard.GetField(0, 4));
+            chessboard.Display();
+            chessboard.MoveFromFieldToField(chessboard.GetField(0, 4), chessboard.GetField(0, 5));
+            chessboard.Display();
+            chessboard.MoveFromFieldToField(chessboard.GetField(0, 5), chessboard.GetField(0, 6));
+            chessboard.Display();
+
+            chessboard.SaveToXML();
 
             //Bishop bishop = new Bishop(ColorEnum.White);
 

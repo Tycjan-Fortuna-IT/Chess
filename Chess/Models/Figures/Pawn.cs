@@ -43,5 +43,10 @@
 
             return AvailablePositions;
         }
+
+        public override string ToString()
+        {
+            return "Pawn";
+        }
     }
 }
