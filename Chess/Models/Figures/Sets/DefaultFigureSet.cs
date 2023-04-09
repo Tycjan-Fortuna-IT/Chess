@@ -33,8 +33,8 @@
                 Figures.Add(BishopLeft);
                 Figures.Add(BishopRight);
 
-                Chessboard.GetField(2, 7).AddChess(KnightLeft);
-                Chessboard.GetField(5, 7).AddChess(KnightRight);
+                Chessboard.GetField(2, 7).AddChess(BishopLeft);
+                Chessboard.GetField(5, 7).AddChess(BishopRight);
 
                 // ------ ADDING QUEEN ------
                 Queen Queen = new Queen(Color);
@@ -107,8 +107,8 @@
                 Figures.Add(BishopLeft);
                 Figures.Add(BishopRight);
 
-                Chessboard.GetField(2, 0).AddChess(KnightLeft);
-                Chessboard.GetField(5, 0).AddChess(KnightRight);
+                Chessboard.GetField(2, 0).AddChess(BishopLeft);
+                Chessboard.GetField(5, 0).AddChess(BishopRight);
 
                 // ------ ADDING QUEEN ------
                 Queen Queen = new Queen(Color);
