@@ -11,7 +11,7 @@ namespace ChessGUI
 
         private Button[,] Buttons = new Button[Chessboard.WIDTH, Chessboard.HEIGHT];
 
-        private Field LastClicked;
+        private Field? LastClicked;
 
         public Chess()
         {
@@ -73,35 +73,31 @@ namespace ChessGUI
             int FieldPositionX = ClickedButton.Location.X / (panel1.Width / Chessboard.WIDTH);
             int FieldPositionY = ClickedButton.Location.Y / (panel1.Height / Chessboard.HEIGHT);
 
-            LastClicked = Board.GetField(FieldPositionX, FieldPositionY);
+            Field CurrentlyClickedField = Board.GetField(FieldPositionX, FieldPositionY);
 
-            ColorEnum Color = checkBox1.Checked ? ColorEnum.Black : ColorEnum.White;
-
-            IChess Chess = new Bishop(Color);
-
-            switch (comboBox1.SelectedItem)
+            if (LastClicked is not null)
             {
-                case "Bishop":
-                    Chess = new Bishop(Color); break;
-                case "King":
-                    Chess = new King(Color); break;
-                case "Knight":
-                    Chess = new Knight(Color); break;
-                case "Pawn":
-                    Chess = new Pawn(Color); break;
-                case "Queen":
-                    Chess = new Queen(Color); break;
-                case "Rook":
-                    Chess = new Rook(Color); break;
+                Field LastClickedField = Board.GetField(LastClicked.PosX, LastClicked.PosY);
+
+                if (!LastClickedField.IsEmpty())
+                {
+                    IChess ChessToMove = LastClickedField.Chess;
+
+                    CurrentlyClickedField.AddChess(ChessToMove);
+
+                    LastClicked.RemoveChess();
+
+                    LastClicked = null;
+                }
             }
-
-            ClickedButton.Image = Chess.Texture;
-
-            LastClicked.AddChess(Chess);
-
-            foreach (var Position in Chess.GetAvailablePositions())
+            else if (!CurrentlyClickedField.IsEmpty())
             {
-                Buttons[Position.PosX, Position.PosY].Text = "Legal";
+                foreach (var Position in CurrentlyClickedField.Chess.GetAvailablePositions())
+                {
+                    Buttons[Position.PosX, Position.PosY].Text = "Legal";
+                }
+
+                LastClicked = CurrentlyClickedField;
             }
 
             this.DrawFiguresOnBoard();
@@ -130,9 +126,6 @@ namespace ChessGUI
                 for (int j = 0; j < Chessboard.HEIGHT; j++)
                 {
                     Field Field = Board.GetField(i, j);
-
-                    if (LastClicked is not null)
-                        LastClicked.RemoveChess();
 
                     Buttons[i, j].Text = "";
                     Buttons[i, j].Image = null;

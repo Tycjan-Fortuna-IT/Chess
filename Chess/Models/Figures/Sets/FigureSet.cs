@@ -18,8 +18,6 @@
         public void PlaceFiguresOnBoard(Chessboard Chessboard)
         {
             FigureSetPlacement.Generate(Chessboard, Figures, Color);
-
-            System.Console.Write(Figures.Count());
         }
 
         //public IChess GetFigureOnPosition(int x, int y)

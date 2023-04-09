@@ -51,6 +51,11 @@ namespace Chess.Models
             return Fields[x + WIDTH * y];
         }
 
+        public void MoveFromTo(int x1, int y1, int x2, int y2)
+        {
+
+        }
+
         /// <summary>
         ///     Save current state of the Chessboard into XML file. All moves will be saved.
         /// </summary>
