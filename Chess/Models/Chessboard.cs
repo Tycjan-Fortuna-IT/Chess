@@ -70,6 +70,17 @@ namespace Chess.Models
             XmlElement BoardUuid = Document.CreateElement("Uuid");
             Root.AppendChild(BoardUuid);
 
+            DateTime now = DateTime.Now;
+
+            #region Date
+
+            XmlElement Date = Document.CreateElement("Date");
+            Root.AppendChild(Date);
+
+            Date.InnerText = now.ToUniversalTime().ToString();
+
+            #endregion Date
+
             #region SizeElement
             XmlElement Size = Document.CreateElement("Size");
             Root.AppendChild(Size);
@@ -93,8 +104,6 @@ namespace Chess.Models
             #endregion MoveHistory
 
             BoardUuid.InnerText = this.Uuid;
-
-            DateTime now = DateTime.Now;
 
             string Filename = now.Day + "." + now.Month + "." + now.Year + "_" +  now.Hour + "." + now.Minute + "." + now.Second;
 

@@ -13,7 +13,7 @@ namespace Chess
 
             //WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
 
-            chessboard.SaveToXML();
+            //chessboard.SaveToXML();
 
             //Bishop bishop = new Bishop(ColorEnum.White);
 
