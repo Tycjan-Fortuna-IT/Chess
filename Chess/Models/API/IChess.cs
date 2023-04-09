@@ -6,6 +6,8 @@
 
         ColorEnum Color { get; }
 
+        System.Drawing.Bitmap Texture { get; }
+
         List<Field> GetAvailablePositions();
     }
 }

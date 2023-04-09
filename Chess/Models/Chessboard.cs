@@ -1,10 +1,12 @@
-﻿namespace Chess.Models
+﻿using System.Xml;
+
+namespace Chess.Models
 {
     public class Chessboard
     {
-        public static readonly short WIDTH = 8;
+        public static readonly int WIDTH = 8;
 
-        public static readonly short HEIGHT = 8;
+        public static readonly int HEIGHT = 8;
 
         private static readonly int AMOUNT_OF_FIELDS = WIDTH * HEIGHT;
 
@@ -23,6 +25,9 @@
             }
         }
 
+        /// <summary>
+        ///     Just for the sake of debugging. Prints the board in console terminal.
+        /// </summary>
         public void Display()
         {
             for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
@@ -44,6 +49,87 @@
         public Field GetField(int x, int y)
         {
             return Fields[x + WIDTH * y];
+        }
+
+        /// <summary>
+        ///     Move IChess from one Field to second Field if it is allowed.
+        /// </summary>
+        /// <param name="First">First Field from which we want to move</param>
+        /// <param name="Second">Second Field to which we want to move</param>
+        public void MoveFromFieldToField(Field First, Field Second)
+        {
+            IChess ChessToMove = First.Chess;
+
+            List<Field> FieldsToMove = ChessToMove.GetAvailablePositions();
+
+            if (FieldsToMove.Contains(Second))
+            {
+                Second.AddChess(ChessToMove);
+
+                First.RemoveChess();
+            }
+        }
+
+        /// <summary>
+        ///     Save current state of the Chessboard into XML file. All moves will be saved.
+        /// </summary>
+        public void SaveToXML()
+        {
+            // Create a new XML document
+            XmlDocument Document = new XmlDocument();
+
+            // Create an XML declaration
+            XmlDeclaration declaration = Document.CreateXmlDeclaration("1.0", "UTF-8", null);
+            Document.AppendChild(declaration);
+
+            // Create a root element
+            XmlElement Root = Document.CreateElement("Chessboard");
+            Document.AppendChild(Root);
+
+            XmlElement BoardUuid = Document.CreateElement("Uuid");
+            Root.AppendChild(BoardUuid);
+
+            DateTime now = DateTime.Now;
+
+            #region Date
+
+            XmlElement Date = Document.CreateElement("Date");
+            Root.AppendChild(Date);
+
+            Date.InnerText = now.ToUniversalTime().ToString();
+
+            #endregion Date
+
+            #region SizeElement
+            XmlElement Size = Document.CreateElement("Size");
+            Root.AppendChild(Size);
+
+            XmlElement SizeWidth = Document.CreateElement("SizeWidth");
+            Size.AppendChild(SizeWidth);
+
+            SizeWidth.InnerText = WIDTH.ToString();
+
+            XmlElement SizeHeight = Document.CreateElement("SizeHeight");
+            Size.AppendChild(SizeHeight);
+
+            SizeHeight.InnerText = HEIGHT.ToString();
+
+            #endregion SizeElement
+
+            #region MoveHistory
+
+            XmlElement History = Document.CreateElement("History");
+
+            #endregion MoveHistory
+
+            BoardUuid.InnerText = this.Uuid;
+
+            string Filename = now.Day + "." + now.Month + "." + now.Year + "_" +  now.Hour + "." + now.Minute + "." + now.Second;
+
+            // Save the XML document to a file in a folder within the solution
+            string folderName = "History";
+            string filePath = Path.Combine("../../../", folderName, Filename + ".xml");
+            Document.Save(filePath);
         }
     }
 }

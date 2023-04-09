@@ -1,5 +1,4 @@
 using Chess.Models;
-using ChessGUI.Properties;
 
 namespace ChessGUI
 {
@@ -7,12 +6,22 @@ namespace ChessGUI
     {
         static Chessboard Board = new Chessboard();
 
+        private FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
+        private FigureSet BlackFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.Black);
+
         private Button[,] Buttons = new Button[Chessboard.WIDTH, Chessboard.HEIGHT];
+
+        private Field? LastClicked;
 
         public Chess()
         {
             InitializeComponent();
             CreateChessboardGrid();
+
+            this.WhiteFigureSet.PlaceFiguresOnBoard(Board);
+            this.BlackFigureSet.PlaceFiguresOnBoard(Board);
+
+            this.DrawFiguresOnBoard();
         }
 
         private void Chess_Load(object sender, EventArgs e)
@@ -36,7 +45,7 @@ namespace ChessGUI
                     Buttons[i, j].Height = ButtonHeight;
                     Buttons[i, j].Width = ButtonWidth;
 
-                    Buttons[i, j].Click += ClickChessboardField;
+                    Buttons[i, j].Click += this.ClickChessboardField;
 
                     Buttons[i, j].BackColor = counter % 2 == 0 ? Color.Gray : Color.White;
 
@@ -47,7 +56,7 @@ namespace ChessGUI
 
                     Buttons[i, j].Location = new Point(i * ButtonWidth, j * ButtonHeight);
 
-                    Buttons[i, j].Text = i + "|" + j;
+                    //Buttons[i, j].Text = i + "|" + j;
                     counter++;
 
                 }
@@ -57,51 +66,41 @@ namespace ChessGUI
 
         private void ClickChessboardField(object sender, EventArgs args)
         {
-            CleanChessboardFields();
+            this.CleanChessboardFields();
 
             Button ClickedButton = (Button)sender;
 
             int FieldPositionX = ClickedButton.Location.X / (panel1.Width / Chessboard.WIDTH);
             int FieldPositionY = ClickedButton.Location.Y / (panel1.Height / Chessboard.HEIGHT);
 
-            Field Field = Board.GetField(FieldPositionX, FieldPositionY);
+            Field CurrentlyClickedField = Board.GetField(FieldPositionX, FieldPositionY);
 
-            IChess Chess = new Bishop(ColorEnum.White);
-            var Image = Properties.Resources.BishopWhite;
-
-            switch (comboBox1.SelectedItem)
+            if (LastClicked is not null)
             {
-                case "Bishop":
-                    Chess = new Bishop(ColorEnum.White);
-                    Image = Properties.Resources.BishopWhite; break;
-                case "King":
-                    Chess = new King(ColorEnum.White);
-                    Image = Properties.Resources.KingWhite; break;
-                case "Knight":
-                    Chess = new Knight(ColorEnum.White);
-                    Image = Properties.Resources.KnightWhite; break;
-                case "Pawn":
-                    Chess = new Pawn(ColorEnum.White);
-                    Image = Properties.Resources.PawnWhite; break;
-                case "Queen":
-                    Chess = new Queen(ColorEnum.White);
-                    Image = Properties.Resources.QueenWhite; break;
-                case "Rook":
-                    Chess = new Rook(ColorEnum.White);
-                    Image = Properties.Resources.RookWhite; break;
+                Field LastClickedField = Board.GetField(LastClicked.PosX, LastClicked.PosY);
+
+                if (!LastClickedField.IsEmpty())
+                {
+                    Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
+
+                    LastClicked = null;
+                }
+            }
+            else if (!CurrentlyClickedField.IsEmpty())
+            {
+                foreach (var Position in CurrentlyClickedField.Chess.GetAvailablePositions())
+                {                       
+                    Buttons[Position.PosX, Position.PosY].BackColor = !Position.IsEmpty() ?
+                        Color.IndianRed : Color.DarkSeaGreen;
+                }
+
+                LastClicked = CurrentlyClickedField;
             }
 
-            ClickedButton.Image = Image;
-
-            Field.AddChess(Chess);
-
-            foreach (var Position in Chess.GetAvailablePositions())
-            {
-                Buttons[Position.PosX, Position.PosY].Text = "Legal";
-            }
+            this.DrawFiguresOnBoard();
         }
 
-        private void CleanChessboardFields()
+        private void DrawFiguresOnBoard()
         {
             for (int i = 0; i < Chessboard.WIDTH; i++)
             {
@@ -110,12 +109,46 @@ namespace ChessGUI
                     Field Field = Board.GetField(i, j);
 
                     if (!Field.IsEmpty())
-                        Field.RemoveChess();
+                    {
+                        Buttons[i, j].Image = Field.Chess.Texture;
+                    }
+                }
+            }
+        }
+
+        private void CleanChessboardFields()
+        {
+            int counter = 1;
+
+            for (int i = 0; i < Chessboard.WIDTH; i++)
+            {
+                for (int j = 0; j < Chessboard.HEIGHT; j++)
+                {
+                    Field Field = Board.GetField(i, j);
 
                     Buttons[i, j].Text = "";
                     Buttons[i, j].Image = null;
+                    Buttons[i, j].BackColor = counter % 2 == 0 ? Color.Gray : Color.White;
+
+                    counter++;
                 }
+                counter++;
             }
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -6,6 +6,8 @@
 
         public ColorEnum Color { get; }
 
+        public System.Drawing.Bitmap Texture { get; }
+
         /// <summary>
         ///     List contatining all allowed moves that King can do.
         /// </summary>
@@ -24,6 +26,9 @@
         public King(ColorEnum Color)
         {
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.KingWhite : Properties.Resources.KingBlack;
         }
 
         /// <summary>
@@ -41,11 +46,18 @@
 
                 if (Field.Board.IsPositionInBounds(x, y))
                 {
-                    Field IteratedField = Field.Board.GetField(x, y);
-
-                    if (IteratedField.IsEmpty())
+                    if (!this.Field.CheckForProjectedObstacle(Pattern, this.Color, 1))
                     {
-                        AvailablePositions.Add(IteratedField);
+                        Field IteratedField = Field.Board.GetField(x, y);
+
+                        if (IteratedField.IsEmpty())
+                        {
+                            AvailablePositions.Add(IteratedField);
+                        }
+                        else if (IteratedField.Chess.Color != this.Color)
+                        {
+                            AvailablePositions.Add(IteratedField);
+                        }
                     }
                 }
             }

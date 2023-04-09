@@ -6,9 +6,14 @@
 
         public ColorEnum Color { get; }
 
-        public Pawn(ColorEnum Color) 
+        public System.Drawing.Bitmap Texture { get; }
+
+        public Pawn(ColorEnum Color)
         {
             this.Color = Color;
+
+            this.Texture = Color == ColorEnum.White ?
+                Properties.Resources.PawnWhite : Properties.Resources.PawnBlack;
         }
 
         /// <summary>
@@ -27,6 +32,10 @@
                 Field IteratedField = Field.Board.GetField(x, y);
 
                 if (IteratedField.IsEmpty())
+                {
+                    AvailablePositions.Add(IteratedField);
+                }
+                else if (IteratedField.Chess.Color != this.Color)
                 {
                     AvailablePositions.Add(IteratedField);
                 }
