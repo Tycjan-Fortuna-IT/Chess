@@ -89,8 +89,9 @@ namespace ChessGUI
             else if (!CurrentlyClickedField.IsEmpty())
             {
                 foreach (var Position in CurrentlyClickedField.Chess.GetAvailablePositions())
-                {
-                    Buttons[Position.PosX, Position.PosY].BackColor = Color.DarkSeaGreen;
+                {                       
+                    Buttons[Position.PosX, Position.PosY].BackColor = !Position.IsEmpty() ?
+                        Color.IndianRed : Color.DarkSeaGreen;
                 }
 
                 LastClicked = CurrentlyClickedField;

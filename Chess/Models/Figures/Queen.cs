@@ -41,16 +41,28 @@
 
             foreach (Tuple<int, int> Pattern in AllowedMovePatterns)
             {
-                int x = Field.PosX + Pattern.Item1;
-                int y = Field.PosY + Pattern.Item2;
+                int x = this.Field.PosX + Pattern.Item1;
+                int y = this.Field.PosY + Pattern.Item2;
 
-                while (Field.Board.IsPositionInBounds(x, y))
+                while (this.Field.Board.IsPositionInBounds(x, y))
                 {
-                    Field IteratedField = Field.Board.GetField(x, y);
-
-                    if (IteratedField.IsEmpty())
+                    if (!this.Field.CheckForProjectedObstacle(Pattern, this.Color, 1))
                     {
-                        AvailablePositions.Add(IteratedField);
+                        Field IteratedField = this.Field.Board.GetField(x, y);
+
+                        if (IteratedField.IsEmpty())
+                        {
+                            AvailablePositions.Add(IteratedField);
+                        }
+                        else if (IteratedField.Chess.Color != this.Color)
+                        {
+                            AvailablePositions.Add(IteratedField);
+                            break;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
 
                     x += Pattern.Item1;

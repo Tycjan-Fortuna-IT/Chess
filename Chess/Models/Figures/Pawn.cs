@@ -35,6 +35,10 @@
                 {
                     AvailablePositions.Add(IteratedField);
                 }
+                else if (IteratedField.Chess.Color != this.Color)
+                {
+                    AvailablePositions.Add(IteratedField);
+                }
             }
 
             return AvailablePositions;
