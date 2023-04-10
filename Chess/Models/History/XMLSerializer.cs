@@ -62,38 +62,14 @@ namespace Chess.Models.History
                 XmlElement Move = Document.CreateElement("Move");
                 History.AppendChild(Move);
 
-                XmlElement Moved = Document.CreateElement("Moved");
-                Move.AppendChild(Moved);
-                Moved.InnerText = m.MovedChess;
-
-                XmlElement From = Document.CreateElement("From");
-                Move.AppendChild(From);
-
-                XmlElement FromX = Document.CreateElement("X");
-                From.AppendChild(FromX);
-                FromX.InnerText = m.FromField.Item1.ToString();
-
-                XmlElement FromY = Document.CreateElement("Y");
-                From.AppendChild(FromY);
-                FromY.InnerText = m.FromField.Item2.ToString();
-
-                XmlElement To = Document.CreateElement("To");
-                Move.AppendChild(To);
-
-                XmlElement ToX = Document.CreateElement("X");
-                To.AppendChild(ToX);
-                ToX.InnerText = m.ToField.Item1.ToString();
-
-                XmlElement ToY = Document.CreateElement("Y");
-                To.AppendChild(ToY);
-                ToY.InnerText = m.ToField.Item2.ToString();
+                Move.SetAttribute("Moved", m.MovedChess);
+                Move.SetAttribute("FromX", m.FromField.Item1.ToString());
+                Move.SetAttribute("FromY", m.FromField.Item2.ToString());
+                Move.SetAttribute("ToX", m.ToField.Item1.ToString());
+                Move.SetAttribute("ToY", m.ToField.Item2.ToString());
 
                 if (m.CapturedChessName is not null)
-                {
-                    XmlElement Captured = Document.CreateElement("Captured");
-                    Move.AppendChild(Captured);
-                    Captured.InnerText = m.CapturedChessName;
-                }
+                    Move.SetAttribute("Captured", m.CapturedChessName);
             }
 
             #endregion MoveHistory
@@ -113,49 +89,18 @@ namespace Chess.Models.History
             XmlDocument Document = new XmlDocument();
             Document.Load(path);
 
-            XmlNodeList MovesHistory = Document.GetElementsByTagName("History");
+            XmlNode HistoryNode = Document.SelectSingleNode("//History");
 
-            foreach (XmlNode History in MovesHistory)
+            foreach (XmlNode moveNode in HistoryNode.ChildNodes)
             {
-                foreach (XmlNode Child in History.ChildNodes)
-                {
-                    int counter = 0;
+                //string moved = moveNode.Attributes["Moved"].Value;
+                int FromX = int.Parse(moveNode.Attributes["FromX"].Value);
+                int FromY = int.Parse(moveNode.Attributes["FromY"].Value);
+                int ToX = int.Parse(moveNode.Attributes["ToX"].Value);
+                int ToY = int.Parse(moveNode.Attributes["ToY"].Value);
+                //string? captured = moveNode.Attributes["Captured"].Value;
 
-                    int FromX = -1;
-                    int FromY = -1;
-                    int ToX = -1;
-                    int ToY = -1;
-
-                    foreach (XmlNode ChildChild in Child.ChildNodes)
-                    {
-                        foreach(XmlNode Element in ChildChild.ChildNodes)
-                        {
-                            if (counter == 1)
-                            {
-                                FromX = Int32.Parse(Element.InnerText);
-                            }
-                            else if (counter == 2)
-                            {
-                                FromY = Int32.Parse(Element.InnerText);
-                            }
-                            else if (counter == 3)
-                            {
-                                ToX = Int32.Parse(Element.InnerText);
-                            }
-                            else if (counter == 4)
-                            {
-                                ToY = Int32.Parse(Element.InnerText);
-                            }
-
-                            counter++;
-                        }
-                    }
-
-                    if (FromX > -1 && FromY > -1 && ToX > -1 && ToY > -1)
-                    {
-                        Board.MoveFromFieldToField(Board.GetField(FromX, FromY), Board.GetField(ToX, ToY));
-                    }
-                }
+                Board.MoveFromFieldToField(Board.GetField(FromX, FromY), Board.GetField(ToX, ToY));
             }
         }
     }
