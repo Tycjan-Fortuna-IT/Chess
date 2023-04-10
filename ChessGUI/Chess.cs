@@ -1,5 +1,5 @@
 using Chess.Models;
-using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace ChessGUI
 {
@@ -18,11 +18,11 @@ namespace ChessGUI
         public Chess()
         {
             InitializeComponent();
-            CreateChessboardGrid();
-
-            //Board.LoadFromXML("C:\\Users\\tycja\\Desktop\\t.xml");
+            this.CreateChessboardGrid();
 
             this.DrawFiguresOnBoard();
+
+            panel2.AutoScroll = true;
         }
 
         private void Chess_Load(object sender, EventArgs e)
@@ -84,6 +84,8 @@ namespace ChessGUI
                 {
                     Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
 
+                    this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
+
                     LastClicked = null;
                 }
             }
@@ -134,6 +136,39 @@ namespace ChessGUI
                     counter++;
                 }
                 counter++;
+            }
+        }
+
+        private void AddNewHistoryElement(Move Move, int HistoryIndex)
+        {
+            bool CaptureMove = Move.CapturedChessName is not null && Move.CapturedChessColor is not null;
+
+            PictureBox PictureBox = new PictureBox();
+
+            Label Label = new Label();
+
+            Label.Text = string.Format("({0}, {1}) to ({2}, {3})", 
+                Move.FromField.Item1, Move.FromField.Item2, Move.ToField.Item1, Move.ToField.Item2);
+
+            Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60);
+
+            panel2.Controls.Add(Label);
+
+            PictureBox.Image = AssetManager.GetTextureByTagName(Move.MovedChess + Move.MovedChessColor);
+            PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60);
+            PictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+
+            panel2.Controls.Add(PictureBox);
+
+            if (CaptureMove)
+            {
+                PictureBox CapturedPictureBox = new PictureBox();
+
+                CapturedPictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Captured");
+                CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60);
+                CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+
+                panel2.Controls.Add(CapturedPictureBox);
             }
         }
 

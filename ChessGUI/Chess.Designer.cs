@@ -35,6 +35,7 @@
             loadToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
+            panel2 = new Panel();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -51,7 +52,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(875, 28);
+            menuStrip1.Size = new Size(992, 28);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -86,11 +87,19 @@
             openFileDialog1.FileName = "openFileDialog1";
             openFileDialog1.FileOk += openFileDialog1_FileOk;
             // 
+            // panel2
+            // 
+            panel2.Location = new Point(719, 45);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(261, 381);
+            panel2.TabIndex = 5;
+            // 
             // Chess
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(875, 697);
+            ClientSize = new Size(992, 697);
+            Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -112,5 +121,6 @@
         private ToolStripMenuItem loadToolStripMenuItem;
         private SaveFileDialog saveFileDialog1;
         private OpenFileDialog openFileDialog1;
+        private Panel panel2;
     }
 }

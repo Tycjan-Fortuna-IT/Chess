@@ -69,7 +69,10 @@ namespace Chess.Models.History
                 Move.SetAttribute("ToY", m.ToField.Item2.ToString());
 
                 if (m.CapturedChessName is not null)
+                {
                     Move.SetAttribute("Captured", m.CapturedChessName);
+                    Move.SetAttribute("Color", Enum.GetName(typeof(ColorEnum), m.CapturedChessColor));
+                }
             }
 
             #endregion MoveHistory

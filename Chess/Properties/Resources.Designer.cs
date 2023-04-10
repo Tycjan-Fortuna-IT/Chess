@@ -73,6 +73,16 @@ namespace Chess.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BishopBlackCaptured {
+            get {
+                object obj = ResourceManager.GetObject("BishopBlackCaptured", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BishopWhite {
             get {
                 object obj = ResourceManager.GetObject("BishopWhite", resourceCulture);

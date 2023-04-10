@@ -10,7 +10,9 @@
                 new Tuple<int, int>(First.PosX, First.PosY),
                 new Tuple<int, int>(Second.PosX, Second.PosY),
                 First.Chess.ToString(),
-                !Second.IsEmpty() ? Second.Chess.ToString() : null
+                First.Chess.Color,
+                !Second.IsEmpty() ? Second.Chess.ToString() : null,
+                !Second.IsEmpty() ? Second.Chess.Color : null
             ));
         }
 
