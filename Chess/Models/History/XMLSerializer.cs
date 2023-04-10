@@ -4,19 +4,11 @@ namespace Chess.Models.History
 {
     public class XMLSerializer : ISerializer
     {
-        //private readonly string path;
-
-        //private readonly string folder;
-
-        //public XMLSerializer(string path, string folder)
-        //{
-        //    this.path = path;
-        //    this.folder = folder;
-        //}
-
         /// <summary>
         ///     Save current state of the Chessboard into XML file. All moves will be saved.
         /// </summary>
+        /// <param name="Board">Reference to the main Chessboard from which we take move history</param>
+        /// <param name="path">Path to where the data should saved</param>
         public void Save(Chessboard Board, string path)
         {
             // Create a new XML document
@@ -108,13 +100,63 @@ namespace Chess.Models.History
 
             BoardUuid.InnerText = Board.Uuid;
 
-            //string Filename = now.Day + "." + now.Month + "." + now.Year + "_" + now.Hour + "." + now.Minute + "." + now.Second;
+            Document.Save(path);
+        }
 
-            // Save the XML document to a file in a folder within the solution
-            //string filePath = Path.Combine(path, folder, Filename + ".xml");
-            string filePath = Path.Combine(path);
+        /// <summary>
+        ///     Load saved state of the Chessboard from XML file. All moves will be recreated.
+        /// </summary>
+        /// <param name="Board">Reference to the main Chessboard for which we will recreate moves</param>
+        /// <param name="path">Path from where the data should be loaded</param>
+        public void Load(Chessboard Board, string path)
+        {
+            XmlDocument Document = new XmlDocument();
+            Document.Load(path);
 
-            Document.Save(filePath);
+            XmlNodeList MovesHistory = Document.GetElementsByTagName("History");
+
+            foreach (XmlNode History in MovesHistory)
+            {
+                foreach (XmlNode Child in History.ChildNodes)
+                {
+                    int counter = 0;
+
+                    int FromX = -1;
+                    int FromY = -1;
+                    int ToX = -1;
+                    int ToY = -1;
+
+                    foreach (XmlNode ChildChild in Child.ChildNodes)
+                    {
+                        foreach(XmlNode Element in ChildChild.ChildNodes)
+                        {
+                            if (counter == 1)
+                            {
+                                FromX = Int32.Parse(Element.InnerText);
+                            }
+                            else if (counter == 2)
+                            {
+                                FromY = Int32.Parse(Element.InnerText);
+                            }
+                            else if (counter == 3)
+                            {
+                                ToX = Int32.Parse(Element.InnerText);
+                            }
+                            else if (counter == 4)
+                            {
+                                ToY = Int32.Parse(Element.InnerText);
+                            }
+
+                            counter++;
+                        }
+                    }
+
+                    if (FromX > -1 && FromY > -1 && ToX > -1 && ToY > -1)
+                    {
+                        Board.MoveFromFieldToField(Board.GetField(FromX, FromY), Board.GetField(ToX, ToY));
+                    }
+                }
+            }
         }
     }
 }

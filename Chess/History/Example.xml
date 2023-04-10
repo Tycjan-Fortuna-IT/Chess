@@ -1,9 +1,33 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<Chessboard>
-  <Uuid>3415e46e-96f7-4cbf-942e-3e887f08bdac</Uuid>
-  <Date>4/9/2023 10:24:34 AM</Date>
-  <Size>
-    <SizeWidth>8</SizeWidth>
-    <SizeHeight>8</SizeHeight>
-  </Size>
+﻿<Chessboard>
+    <Uuid>13c40743-3335-4e47-8066-b7d0d93ec47a</Uuid>
+    <Date>4/9/2023 7:13:05 PM</Date>
+    <Size>
+        <SizeWidth>8</SizeWidth>
+        <SizeHeight>8</SizeHeight>
+    </Size>
+    <History>
+        <Move>
+            <Moved>Knight</Moved>
+            <From>
+                <X>4</X>
+                <Y>4</Y>
+            </From>
+            <To>
+                <X>3</X>
+                <Y>2</Y>
+            </To>
+        </Move>
+        <Move>
+            <Moved>Knight</Moved>
+            <From>
+                <X>3</X>
+                <Y>2</Y>
+            </From>
+            <To>
+                <X>2</X>
+                <Y>0</Y>
+            </To>
+            <Captured>Bishop</Captured>
+        </Move>
+    </History>
 </Chessboard>

@@ -28,7 +28,6 @@ namespace Chess.Models
                 this.Fields[i] = new Field(this, i % WIDTH, i / HEIGHT);
             }
 
-            //this.Serializer = new XMLSerializer("../../../", "History");
             this.Serializer = new XMLSerializer();
         }
 
@@ -85,6 +84,11 @@ namespace Chess.Models
         public void SaveToXML(string path)
         {
             this.Serializer.Save(this, path);
+        }
+
+        public void LoadFromXML(string path)
+        {
+            this.Serializer.Load(this, path);
         }
     }
 }

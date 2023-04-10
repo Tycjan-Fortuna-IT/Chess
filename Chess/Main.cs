@@ -20,16 +20,22 @@ namespace Chess
             BlackFigureSet.PlaceFiguresOnBoard(chessboard);
             WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
 
-            chessboard.MoveFromFieldToField(chessboard.GetField(0, 1), chessboard.GetField(0, 2));
+            chessboard.LoadFromXML("C:\\Users\\tycja\\Desktop\\t.xml");
+
             chessboard.Display();
-            chessboard.MoveFromFieldToField(chessboard.GetField(0, 2), chessboard.GetField(0, 3));
-            chessboard.Display();
-            chessboard.MoveFromFieldToField(chessboard.GetField(0, 3), chessboard.GetField(0, 4));
-            chessboard.Display();
-            chessboard.MoveFromFieldToField(chessboard.GetField(0, 4), chessboard.GetField(0, 5));
-            chessboard.Display();
-            chessboard.MoveFromFieldToField(chessboard.GetField(0, 5), chessboard.GetField(0, 6));
-            chessboard.Display();
+
+
+
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 1), chessboard.GetField(0, 2));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 2), chessboard.GetField(0, 3));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 3), chessboard.GetField(0, 4));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 4), chessboard.GetField(0, 5));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 5), chessboard.GetField(0, 6));
+            //chessboard.Display();
 
             //chessboard.SaveToXML();
 

@@ -22,6 +22,8 @@ namespace ChessGUI
             this.WhiteFigureSet.PlaceFiguresOnBoard(Board);
             this.BlackFigureSet.PlaceFiguresOnBoard(Board);
 
+            //Board.LoadFromXML("C:\\Users\\tycja\\Desktop\\t.xml");
+
             this.DrawFiguresOnBoard();
         }
 
