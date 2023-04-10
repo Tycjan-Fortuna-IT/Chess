@@ -1,8 +1,8 @@
-﻿using System.Xml;
+﻿using Chess.Models.History;
 
 namespace Chess.Models
 {
-    public class Chessboard
+    public class Chessboard : IBoard
     {
         public static readonly int WIDTH = 8;
 
@@ -14,7 +14,13 @@ namespace Chess.Models
 
         private Field[] Fields = new Field[AMOUNT_OF_FIELDS];
 
-        public Chessboard()
+        public HistoryManager HistoryManager = new HistoryManager();
+
+        private ISerializer Serializer;
+
+        private Dictionary<string, FigureSet> FigureSet;
+
+        public Chessboard(Dictionary<string, FigureSet> FigureSet)
         {
             this.Uuid = Guid.NewGuid().ToString();
             this.Fields = new Field[AMOUNT_OF_FIELDS];
@@ -23,11 +29,34 @@ namespace Chess.Models
             {
                 this.Fields[i] = new Field(this, i % WIDTH, i / HEIGHT);
             }
+
+            this.Serializer = new XMLSerializer();
+            this.FigureSet = FigureSet;
+
+            this.InitializeChessboard();
+        }
+
+        private void InitializeChessboard()
+        {
+            foreach (FigureSet Set in FigureSet.Values)
+            {
+                Set.PlaceFiguresOnBoard(this);
+            }
+        }
+
+        private void ClearChessboard()
+        {
+            foreach (Field Field in this.Fields)
+            {
+                if (!Field.IsEmpty())
+                    Field.RemoveChess();
+            }
         }
 
         /// <summary>
         ///     Just for the sake of debugging. Prints the board in console terminal.
         /// </summary>
+        [Obsolete]
         public void Display()
         {
             for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
@@ -64,6 +93,8 @@ namespace Chess.Models
 
             if (FieldsToMove.Contains(Second))
             {
+                HistoryManager.RegisterMove(First, Second);
+
                 Second.AddChess(ChessToMove);
 
                 First.RemoveChess();
@@ -71,65 +102,25 @@ namespace Chess.Models
         }
 
         /// <summary>
-        ///     Save current state of the Chessboard into XML file. All moves will be saved.
+        ///     Save current state of the Chessboard into serializer's storage. All moves will be saved.
         /// </summary>
-        public void SaveToXML()
+        /// <param name="path">Path to file where state of the Chessboard should be saved</param>
+        public void Save(string path)
         {
-            // Create a new XML document
-            XmlDocument Document = new XmlDocument();
+            this.Serializer.Save(this, path);
+        }
 
-            // Create an XML declaration
-            XmlDeclaration declaration = Document.CreateXmlDeclaration("1.0", "UTF-8", null);
-            Document.AppendChild(declaration);
+        /// <summary>
+        ///     Load saved state of the Chessboard.
+        /// </summary>
+        /// <param name="path">Path to save file</param>
+        public void Load(string path)
+        {
+            this.ClearChessboard();
 
-            // Create a root element
-            XmlElement Root = Document.CreateElement("Chessboard");
-            Document.AppendChild(Root);
-
-            XmlElement BoardUuid = Document.CreateElement("Uuid");
-            Root.AppendChild(BoardUuid);
-
-            DateTime now = DateTime.Now;
-
-            #region Date
-
-            XmlElement Date = Document.CreateElement("Date");
-            Root.AppendChild(Date);
-
-            Date.InnerText = now.ToUniversalTime().ToString();
-
-            #endregion Date
-
-            #region SizeElement
-            XmlElement Size = Document.CreateElement("Size");
-            Root.AppendChild(Size);
-
-            XmlElement SizeWidth = Document.CreateElement("SizeWidth");
-            Size.AppendChild(SizeWidth);
-
-            SizeWidth.InnerText = WIDTH.ToString();
-
-            XmlElement SizeHeight = Document.CreateElement("SizeHeight");
-            Size.AppendChild(SizeHeight);
-
-            SizeHeight.InnerText = HEIGHT.ToString();
-
-            #endregion SizeElement
-
-            #region MoveHistory
-
-            XmlElement History = Document.CreateElement("History");
-
-            #endregion MoveHistory
-
-            BoardUuid.InnerText = this.Uuid;
-
-            string Filename = now.Day + "." + now.Month + "." + now.Year + "_" +  now.Hour + "." + now.Minute + "." + now.Second;
-
-            // Save the XML document to a file in a folder within the solution
-            string folderName = "History";
-            string filePath = Path.Combine("../../../", folderName, Filename + ".xml");
-            Document.Save(filePath);
+            this.InitializeChessboard();
+            
+            this.Serializer.Load(this, path);
         }
     }
 }

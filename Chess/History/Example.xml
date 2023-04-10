@@ -1,9 +1,21 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<Chessboard>
-  <Uuid>3415e46e-96f7-4cbf-942e-3e887f08bdac</Uuid>
-  <Date>4/9/2023 10:24:34 AM</Date>
-  <Size>
-    <SizeWidth>8</SizeWidth>
-    <SizeHeight>8</SizeHeight>
-  </Size>
+﻿<Chessboard>
+    <Uuid>3664d7db-d5c6-4394-b531-c94731f8fd99</Uuid>
+    <Date>4/10/2023 10:37:32 AM</Date>
+    <Size>
+        <SizeWidth>8</SizeWidth>
+        <SizeHeight>8</SizeHeight>
+    </Size>
+    <History>
+        <Move Moved="Pawn" FromX="0" FromY="1" ToX="0" ToY="2"/>
+        <Move Moved="Pawn" FromX="3" FromY="1" ToX="3" ToY="2"/>
+        <Move Moved="King" FromX="4" FromY="0" ToX="3" ToY="1"/>
+        <Move Moved="Pawn" FromX="4" FromY="1" ToX="4" ToY="2"/>
+        <Move Moved="Queen" FromX="3" FromY="0" ToX="6" ToY="3"/>
+        <Move Moved="Queen" FromX="6" FromY="3" ToX="3" ToY="6" Captured="Pawn"/>
+        <Move Moved="Queen" FromX="3" FromY="6" ToX="2" ToY="6" Captured="Pawn"/>
+        <Move Moved="Knight" FromX="6" FromY="0" ToX="5" ToY="2"/>
+        <Move Moved="Knight" FromX="6" FromY="7" ToX="5" ToY="5"/>
+        <Move Moved="Knight" FromX="5" FromY="5" ToX="6" ToY="3"/>
+        <Move Moved="Rook" FromX="7" FromY="0" ToX="6" ToY="0"/>
+    </History>
 </Chessboard>

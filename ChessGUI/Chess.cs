@@ -1,13 +1,15 @@
 using Chess.Models;
+using System.Text.RegularExpressions;
 
 namespace ChessGUI
 {
     public partial class Chess : Form
     {
-        static Chessboard Board = new Chessboard();
-
-        private FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
-        private FigureSet BlackFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.Black);
+        static Chessboard Board = new Chessboard(new Dictionary<string, FigureSet>
+        {
+            { "Black", new FigureSet(new DefaultFigureSet(), ColorEnum.Black) },
+            { "White", new FigureSet(new DefaultFigureSet(), ColorEnum.White) }
+        });
 
         private Button[,] Buttons = new Button[Chessboard.WIDTH, Chessboard.HEIGHT];
 
@@ -16,12 +18,12 @@ namespace ChessGUI
         public Chess()
         {
             InitializeComponent();
-            CreateChessboardGrid();
-
-            this.WhiteFigureSet.PlaceFiguresOnBoard(Board);
-            this.BlackFigureSet.PlaceFiguresOnBoard(Board);
+            this.CreateChessboardGrid();
 
             this.DrawFiguresOnBoard();
+
+            panel2.AutoScroll = true;
+            panel2.AutoScrollPosition = Point.Empty;
         }
 
         private void Chess_Load(object sender, EventArgs e)
@@ -83,13 +85,15 @@ namespace ChessGUI
                 {
                     Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
 
+                    this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
+
                     LastClicked = null;
                 }
             }
             else if (!CurrentlyClickedField.IsEmpty())
             {
                 foreach (var Position in CurrentlyClickedField.Chess.GetAvailablePositions())
-                {                       
+                {
                     Buttons[Position.PosX, Position.PosY].BackColor = !Position.IsEmpty() ?
                         Color.IndianRed : Color.DarkSeaGreen;
                 }
@@ -136,6 +140,49 @@ namespace ChessGUI
             }
         }
 
+        private void AddNewHistoryElement(Move Move, int HistoryIndex)
+        {
+            bool CaptureMove = Move.CapturedChessName is not null && Move.CapturedChessColor is not null;
+
+            PictureBox PictureBox = new PictureBox();
+
+            Label Label = new Label();
+
+            Point ScrollPosition = panel2.AutoScrollPosition;
+
+            Label.Text = string.Format("({0}, {1}) to ({2}, {3})",
+                Move.FromField.Item1, Move.FromField.Item2, Move.ToField.Item1, Move.ToField.Item2);
+
+            Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+
+            panel2.Controls.Add(Label);
+
+            PictureBox.Image = AssetManager.GetTextureByTagName(Move.MovedChess + Move.MovedChessColor);
+            PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+            PictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+
+            panel2.Controls.Add(PictureBox);
+
+            if (CaptureMove)
+            {
+                PictureBox CapturedPictureBox = new PictureBox();
+
+                CapturedPictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Captured");
+                CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+                CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+
+                panel2.Controls.Add(CapturedPictureBox);
+            }
+        }
+
+        private void LoadHistory()
+        {
+            for (int i = 0; i < Board.HistoryManager.Moves.Count(); i++)
+            {
+                this.AddNewHistoryElement(Board.HistoryManager.Moves[i], i + 1);
+            }
+        }
+
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -143,10 +190,40 @@ namespace ChessGUI
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.ValidateNames = true;
+            saveFileDialog1.Filter = "Xml files (*.xml)|*.xml";
 
+            saveFileDialog1.ShowDialog(this);
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ValidateNames = true;
+            openFileDialog1.Filter = "Xml files (*.xml)|*.xml";
+
+            openFileDialog1.ShowDialog(this);
+        }
+
+        private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string filePath = saveFileDialog1.FileName;
+
+            Board.Save(filePath);
+        }
+
+        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string filePath = openFileDialog1.FileName;
+
+            Board.Load(filePath);
+
+            this.CleanChessboardFields();
+            this.DrawFiguresOnBoard();
+
+            this.LoadHistory();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

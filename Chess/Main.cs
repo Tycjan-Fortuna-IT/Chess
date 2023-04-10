@@ -6,7 +6,11 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            //Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>
+            {
+                { "Black", new FigureSet(new DefaultFigureSet(), ColorEnum.Black) },
+                { "White", new FigureSet(new DefaultFigureSet(), ColorEnum.White) }
+            });
 
             //chessboard.GetField(1, 1).AddChess(new Bishop(ColorEnum.White));
 
@@ -14,9 +18,27 @@ namespace Chess
 
             //System.Console.WriteLine(t);
             //chessboard.Display();
-            //FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
 
+
+            //BlackFigureSet.PlaceFiguresOnBoard(chessboard);
             //WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
+
+            //chessboard.Load("C:\\Users\\tycja\\Desktop\\t.xml");
+
+            //chessboard.Display();
+
+
+
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 1), chessboard.GetField(0, 2));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 2), chessboard.GetField(0, 3));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 3), chessboard.GetField(0, 4));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 4), chessboard.GetField(0, 5));
+            //chessboard.Display();
+            //chessboard.MoveFromFieldToField(chessboard.GetField(0, 5), chessboard.GetField(0, 6));
+            //chessboard.Display();
 
             //chessboard.SaveToXML();
 
