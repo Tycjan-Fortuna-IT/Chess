@@ -95,7 +95,7 @@
             panel2.Location = new Point(708, 34);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(228, 335);
+            panel2.Size = new Size(244, 335);
             panel2.TabIndex = 5;
             // 
             // Chess

@@ -175,6 +175,14 @@ namespace ChessGUI
             }
         }
 
+        private void LoadHistory()
+        {
+            for (int i = 0; i < Board.HistoryManager.Moves.Count(); i++)
+            {
+                this.AddNewHistoryElement(Board.HistoryManager.Moves[i], i + 1);
+            }
+        }
+
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -211,6 +219,8 @@ namespace ChessGUI
 
             this.CleanChessboardFields();
             this.DrawFiguresOnBoard();
+
+            this.LoadHistory();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
