@@ -62,17 +62,17 @@ namespace Chess.Models.History
                 XmlElement Move = Document.CreateElement("Move");
                 History.AppendChild(Move);
 
-                Move.SetAttribute("Moved", m.MovedChess);
+                //Move.SetAttribute("Moved", m.MovedChess);
                 Move.SetAttribute("FromX", m.FromField.Item1.ToString());
                 Move.SetAttribute("FromY", m.FromField.Item2.ToString());
                 Move.SetAttribute("ToX", m.ToField.Item1.ToString());
                 Move.SetAttribute("ToY", m.ToField.Item2.ToString());
 
-                if (m.CapturedChessName is not null)
-                {
-                    Move.SetAttribute("Captured", m.CapturedChessName);
-                    Move.SetAttribute("Color", Enum.GetName(typeof(ColorEnum), m.CapturedChessColor));
-                }
+                //if (m.CapturedChessName is not null)
+                //{
+                //    Move.SetAttribute("Captured", m.CapturedChessName);
+                //    Move.SetAttribute("Color", Enum.GetName(typeof(ColorEnum), m.CapturedChessColor));
+                //}
             }
 
             #endregion MoveHistory

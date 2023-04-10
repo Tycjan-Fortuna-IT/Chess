@@ -23,6 +23,7 @@ namespace ChessGUI
             this.DrawFiguresOnBoard();
 
             panel2.AutoScroll = true;
+            panel2.AutoScrollPosition = Point.Empty;
         }
 
         private void Chess_Load(object sender, EventArgs e)
@@ -147,15 +148,17 @@ namespace ChessGUI
 
             Label Label = new Label();
 
-            Label.Text = string.Format("({0}, {1}) to ({2}, {3})", 
+            Point ScrollPosition = panel2.AutoScrollPosition;
+
+            Label.Text = string.Format("({0}, {1}) to ({2}, {3})",
                 Move.FromField.Item1, Move.FromField.Item2, Move.ToField.Item1, Move.ToField.Item2);
 
-            Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60);
+            Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
 
             panel2.Controls.Add(Label);
 
             PictureBox.Image = AssetManager.GetTextureByTagName(Move.MovedChess + Move.MovedChessColor);
-            PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60);
+            PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
             PictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
             panel2.Controls.Add(PictureBox);
@@ -165,7 +168,7 @@ namespace ChessGUI
                 PictureBox CapturedPictureBox = new PictureBox();
 
                 CapturedPictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Captured");
-                CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60);
+                CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
                 CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
                 panel2.Controls.Add(CapturedPictureBox);
@@ -208,6 +211,11 @@ namespace ChessGUI
 
             this.CleanChessboardFields();
             this.DrawFiguresOnBoard();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
