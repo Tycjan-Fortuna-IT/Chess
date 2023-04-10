@@ -5,10 +5,11 @@ namespace ChessGUI
 {
     public partial class Chess : Form
     {
-        static Chessboard Board = new Chessboard();
-
-        private FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
-        private FigureSet BlackFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.Black);
+        static Chessboard Board = new Chessboard(new Dictionary<string, FigureSet>
+        {
+            { "Black", new FigureSet(new DefaultFigureSet(), ColorEnum.Black) },
+            { "White", new FigureSet(new DefaultFigureSet(), ColorEnum.White) }
+        });
 
         private Button[,] Buttons = new Button[Chessboard.WIDTH, Chessboard.HEIGHT];
 
@@ -18,9 +19,6 @@ namespace ChessGUI
         {
             InitializeComponent();
             CreateChessboardGrid();
-
-            this.WhiteFigureSet.PlaceFiguresOnBoard(Board);
-            this.BlackFigureSet.PlaceFiguresOnBoard(Board);
 
             //Board.LoadFromXML("C:\\Users\\tycja\\Desktop\\t.xml");
 
@@ -154,14 +152,27 @@ namespace ChessGUI
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openFileDialog1.ValidateNames = true;
+            openFileDialog1.Filter = "Xml files (*.xml)|*.xml";
 
+            openFileDialog1.ShowDialog(this);
         }
 
         private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string filePath = saveFileDialog1.FileName;
 
-            Board.SaveToXML(filePath);
+            Board.Save(filePath);
+        }
+
+        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string filePath = openFileDialog1.FileName;
+
+            Board.Load(filePath);
+
+            this.CleanChessboardFields();
+            this.DrawFiguresOnBoard();
         }
     }
 }

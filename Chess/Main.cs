@@ -6,7 +6,11 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>
+            {
+                { "Black", new FigureSet(new DefaultFigureSet(), ColorEnum.Black) },
+                { "White", new FigureSet(new DefaultFigureSet(), ColorEnum.White) }
+            });
 
             //chessboard.GetField(1, 1).AddChess(new Bishop(ColorEnum.White));
 
@@ -14,15 +18,14 @@ namespace Chess
 
             //System.Console.WriteLine(t);
             //chessboard.Display();
-            FigureSet BlackFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.Black);
-            FigureSet WhiteFigureSet = new FigureSet(new DefaultFigureSet(), ColorEnum.White);
 
-            BlackFigureSet.PlaceFiguresOnBoard(chessboard);
-            WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
 
-            chessboard.LoadFromXML("C:\\Users\\tycja\\Desktop\\t.xml");
+            //BlackFigureSet.PlaceFiguresOnBoard(chessboard);
+            //WhiteFigureSet.PlaceFiguresOnBoard(chessboard);
 
-            chessboard.Display();
+            //chessboard.Load("C:\\Users\\tycja\\Desktop\\t.xml");
+
+            //chessboard.Display();
 
 
 

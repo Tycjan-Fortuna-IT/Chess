@@ -18,7 +18,9 @@ namespace Chess.Models
 
         private ISerializer Serializer;
 
-        public Chessboard()
+        private Dictionary<string, FigureSet> FigureSet;
+
+        public Chessboard(Dictionary<string, FigureSet> FigureSet)
         {
             this.Uuid = Guid.NewGuid().ToString();
             this.Fields = new Field[AMOUNT_OF_FIELDS];
@@ -29,11 +31,32 @@ namespace Chess.Models
             }
 
             this.Serializer = new XMLSerializer();
+            this.FigureSet = FigureSet;
+
+            this.InitializeChessboard();
+        }
+
+        private void InitializeChessboard()
+        {
+            foreach (FigureSet Set in FigureSet.Values)
+            {
+                Set.PlaceFiguresOnBoard(this);
+            }
+        }
+
+        private void ClearChessboard()
+        {
+            foreach (Field Field in this.Fields)
+            {
+                if (!Field.IsEmpty())
+                    Field.RemoveChess();
+            }
         }
 
         /// <summary>
         ///     Just for the sake of debugging. Prints the board in console terminal.
         /// </summary>
+        [Obsolete]
         public void Display()
         {
             for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
@@ -81,13 +104,22 @@ namespace Chess.Models
         /// <summary>
         ///     Save current state of the Chessboard into serializer's storage. All moves will be saved.
         /// </summary>
-        public void SaveToXML(string path)
+        /// <param name="path">Path to file where state of the Chessboard should be saved</param>
+        public void Save(string path)
         {
             this.Serializer.Save(this, path);
         }
 
-        public void LoadFromXML(string path)
+        /// <summary>
+        ///     Load saved state of the Chessboard.
+        /// </summary>
+        /// <param name="path">Path to save file</param>
+        public void Load(string path)
         {
+            this.ClearChessboard();
+
+            this.InitializeChessboard();
+            
             this.Serializer.Load(this, path);
         }
     }

@@ -34,6 +34,7 @@
             toolStripMenuItem1 = new ToolStripMenuItem();
             loadToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
+            openFileDialog1 = new OpenFileDialog();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -65,20 +66,25 @@
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(224, 26);
+            toolStripMenuItem1.Size = new Size(125, 26);
             toolStripMenuItem1.Text = "Save";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            loadToolStripMenuItem.Size = new Size(224, 26);
+            loadToolStripMenuItem.Size = new Size(125, 26);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
             // saveFileDialog1
             // 
             saveFileDialog1.FileOk += saveFileDialog1_FileOk;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog1.FileOk += openFileDialog1_FileOk;
             // 
             // Chess
             // 
@@ -105,5 +111,6 @@
         private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem loadToolStripMenuItem;
         private SaveFileDialog saveFileDialog1;
+        private OpenFileDialog openFileDialog1;
     }
 }
