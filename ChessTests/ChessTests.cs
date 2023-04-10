@@ -8,7 +8,7 @@ namespace ChessTests
         [TestMethod]
         public void ChessPlacementTests() 
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             Bishop bishop = new Bishop(ColorEnum.White);
 
@@ -24,7 +24,7 @@ namespace ChessTests
         [TestMethod]
         public void BishopAllowedPositionsTest()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             Bishop bishop = new Bishop(ColorEnum.White);
 
@@ -173,7 +173,7 @@ namespace ChessTests
         [TestMethod]
         public void KnightAllowedPositionsTest()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             Knight knight = new Knight(ColorEnum.White);
 
@@ -285,7 +285,7 @@ namespace ChessTests
         [TestMethod]
         public void RookAllowedPositionsTest()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             Rook rook = new Rook(ColorEnum.White);
 
@@ -491,7 +491,7 @@ namespace ChessTests
         [TestMethod]
         public void QueenAllowedPositionsTest()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             Queen queen = new Queen(ColorEnum.White);
 
@@ -766,7 +766,7 @@ namespace ChessTests
         [TestMethod]
         public void KingAllowedPositionsTest()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             King king = new King(ColorEnum.White);
 
@@ -886,7 +886,7 @@ namespace ChessTests
         [TestMethod]
         public void PawnAllowedPositionsTest()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             Pawn pawnWhite = new Pawn(ColorEnum.White);
             Pawn pawnBlack = new Pawn(ColorEnum.Black);
@@ -912,7 +912,7 @@ namespace ChessTests
         [TestMethod]
         public void ProjectionTests()
         {
-            Chessboard chessboard = new Chessboard();
+            Chessboard chessboard = new Chessboard(new Dictionary<string, FigureSet>());
 
             chessboard.GetField(1, 1).AddChess(new Bishop(ColorEnum.White));
 
