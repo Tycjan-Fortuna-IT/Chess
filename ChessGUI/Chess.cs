@@ -22,8 +22,8 @@ namespace ChessGUI
 
             this.DrawFiguresOnBoard();
 
-            panel2.AutoScroll = true;
-            panel2.AutoScrollPosition = Point.Empty;
+            HistoryPanel.AutoScroll = true;
+            HistoryPanel.AutoScrollPosition = Point.Empty;
         }
 
         private void Chess_Load(object sender, EventArgs e)
@@ -33,8 +33,8 @@ namespace ChessGUI
 
         private void CreateChessboardGrid()
         {
-            int ButtonWidth = panel1.Width / Chessboard.WIDTH;
-            int ButtonHeight = panel1.Height / Chessboard.HEIGHT;
+            int ButtonWidth = ChessboardPanel.Width / Chessboard.WIDTH;
+            int ButtonHeight = ChessboardPanel.Height / Chessboard.HEIGHT;
 
             int counter = 1;
 
@@ -54,7 +54,7 @@ namespace ChessGUI
                     Buttons[i, j].Margin = new Padding(0);
                     Buttons[i, j].Padding = new Padding(0);
 
-                    panel1.Controls.Add(Buttons[i, j]);
+                    ChessboardPanel.Controls.Add(Buttons[i, j]);
 
                     Buttons[i, j].Location = new Point(i * ButtonWidth, j * ButtonHeight);
 
@@ -72,8 +72,8 @@ namespace ChessGUI
 
             Button ClickedButton = (Button)sender;
 
-            int FieldPositionX = ClickedButton.Location.X / (panel1.Width / Chessboard.WIDTH);
-            int FieldPositionY = ClickedButton.Location.Y / (panel1.Height / Chessboard.HEIGHT);
+            int FieldPositionX = ClickedButton.Location.X / (ChessboardPanel.Width / Chessboard.WIDTH);
+            int FieldPositionY = ClickedButton.Location.Y / (ChessboardPanel.Height / Chessboard.HEIGHT);
 
             Field CurrentlyClickedField = Board.GetField(FieldPositionX, FieldPositionY);
 
@@ -148,20 +148,20 @@ namespace ChessGUI
 
             Label Label = new Label();
 
-            Point ScrollPosition = panel2.AutoScrollPosition;
+            Point ScrollPosition = HistoryPanel.AutoScrollPosition;
 
             Label.Text = string.Format("({0}, {1}) to ({2}, {3})",
                 Move.FromField.Item1, Move.FromField.Item2, Move.ToField.Item1, Move.ToField.Item2);
 
             Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
 
-            panel2.Controls.Add(Label);
+            HistoryPanel.Controls.Add(Label);
 
             PictureBox.Image = AssetManager.GetTextureByTagName(Move.MovedChess + Move.MovedChessColor);
             PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
             PictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
-            panel2.Controls.Add(PictureBox);
+            HistoryPanel.Controls.Add(PictureBox);
 
             if (CaptureMove)
             {
@@ -171,7 +171,7 @@ namespace ChessGUI
                 CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
                 CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
-                panel2.Controls.Add(CapturedPictureBox);
+                HistoryPanel.Controls.Add(CapturedPictureBox);
             }
         }
 

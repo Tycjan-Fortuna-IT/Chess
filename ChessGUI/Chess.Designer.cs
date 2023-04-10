@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
+            ChessboardPanel = new Panel();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
             loadToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
-            panel2 = new Panel();
+            HistoryPanel = new Panel();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // ChessboardPanel
             // 
-            panel1.Location = new Point(32, 34);
-            panel1.Margin = new Padding(3, 2, 3, 2);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(640, 640);
-            panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
+            ChessboardPanel.Location = new Point(32, 34);
+            ChessboardPanel.Margin = new Padding(3, 2, 3, 2);
+            ChessboardPanel.Name = "ChessboardPanel";
+            ChessboardPanel.Size = new Size(640, 640);
+            ChessboardPanel.TabIndex = 0;
+            ChessboardPanel.Paint += panel1_Paint;
             // 
             // menuStrip1
             // 
@@ -90,21 +90,22 @@
             openFileDialog1.FileName = "openFileDialog1";
             openFileDialog1.FileOk += openFileDialog1_FileOk;
             // 
-            // panel2
+            // HistoryPanel
             // 
-            panel2.Location = new Point(708, 34);
-            panel2.Margin = new Padding(3, 2, 3, 2);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(244, 335);
-            panel2.TabIndex = 5;
+            HistoryPanel.BorderStyle = BorderStyle.FixedSingle;
+            HistoryPanel.Location = new Point(708, 34);
+            HistoryPanel.Margin = new Padding(3, 2, 3, 2);
+            HistoryPanel.Name = "HistoryPanel";
+            HistoryPanel.Size = new Size(244, 335);
+            HistoryPanel.TabIndex = 5;
             // 
             // Chess
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(977, 712);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(HistoryPanel);
+            Controls.Add(ChessboardPanel);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 2, 3, 2);
@@ -119,13 +120,13 @@
 
         #endregion
 
-        private Panel panel1;
+        private Panel ChessboardPanel;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem loadToolStripMenuItem;
         private SaveFileDialog saveFileDialog1;
         private OpenFileDialog openFileDialog1;
-        private Panel panel2;
+        private Panel HistoryPanel;
     }
 }
