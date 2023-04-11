@@ -14,8 +14,10 @@
 
         public ColorEnum? CapturedChessColor;
 
+        public bool PromotionMove;
+
         public Move(Tuple<int, int> FromField, Tuple<int, int> ToField, string MovedChess,
-            ColorEnum MovedChessColor, string? CapturedChessName, ColorEnum? CapturedChessColor)
+            ColorEnum MovedChessColor, string? CapturedChessName, ColorEnum? CapturedChessColor, bool PromotionMove = false)
         {
             this.FromField = FromField;
             this.ToField = ToField;
@@ -23,6 +25,7 @@
             this.MovedChessColor = MovedChessColor;
             this.CapturedChessName = CapturedChessName;
             this.CapturedChessColor = CapturedChessColor;
+            this.PromotionMove = PromotionMove;
         }
     }
 }

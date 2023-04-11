@@ -1,4 +1,6 @@
-﻿namespace Chess.Models
+﻿using System.Collections.Generic;
+
+namespace Chess.Models
 {
     public class HistoryManager
     {
@@ -29,6 +31,19 @@
                 ));
             }
 
+        }
+
+        public void RegisterPromotion(Field PromotionField, IChess PromotionChoice)
+        {
+            Moves.Add(new Move(
+                new Tuple<int, int>(PromotionField.PosX, PromotionField.PosY),
+                new Tuple<int, int>(PromotionField.PosX, PromotionField.PosY),
+                PromotionField.Chess.ToString(),
+                PromotionField.Chess.Color,
+                PromotionChoice.ToString(),
+                PromotionChoice.Color,
+                true
+            ));
         }
 
         [Obsolete]

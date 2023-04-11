@@ -1,4 +1,5 @@
 ﻿using Chess.Models;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 
 namespace Chess.Models
@@ -177,6 +178,18 @@ namespace Chess.Models
             }
 
             return PromotionFields;
+        }
+
+        public void PromoteChessTo(Field PromotionField, IChess PromotionChoice)
+        {
+            if (this.GetFieldsForPromotion(PromotionChoice.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White).Contains(PromotionField))
+            {
+                HistoryManager.RegisterPromotion(PromotionField, PromotionChoice);
+
+                PromotionField.RemoveChess();
+
+                PromotionField.AddChess(PromotionChoice);
+            }
         }
 
         /// <summary>
