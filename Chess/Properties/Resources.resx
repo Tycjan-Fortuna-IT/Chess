@@ -124,11 +124,17 @@
   <data name="BishopBlackCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BishopBlackCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BishopBlackPromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BishopBlackPromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BishopWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BishopWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BishopWhiteCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BishopWhiteCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BishopWhitePromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BishopWhitePromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="KingBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\KingBlack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,11 +148,17 @@
   <data name="KnightBlackCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\KnightBlackCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="KnightBlackPromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KnightBlackPromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="KnightWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\KnightWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="KnightWhiteCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\KnightWhiteCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KnightWhitePromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KnightWhitePromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PawnBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PawnBlack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,11 +178,17 @@
   <data name="QueenBlackCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\QueenBlackCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="QueenBlackPromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\QueenBlackPromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="QueenWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\QueenWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="QueenWhiteCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\QueenWhiteCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="QueenWhitePromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\QueenWhitePromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RookBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RookBlack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,10 +196,16 @@
   <data name="RookBlackCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RookBlackCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RookBlackPromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RookBlackPromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="RookWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RookWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RookWhiteCaptured" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RookWhiteCaptured.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RookWhitePromotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RookWhitePromotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

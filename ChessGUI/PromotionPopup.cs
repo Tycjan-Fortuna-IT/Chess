@@ -37,19 +37,19 @@ namespace ChessGUI
             PictureBox BishopPictureBox = new PictureBox();
             PictureBox KnightPictureBox = new PictureBox();
 
-            QueenPictureBox.Image = AssetManager.GetTextureByTagName("Queen" + PromotionColor);
+            QueenPictureBox.Image = AssetManager.GetTextureByTagName("Queen" + PromotionColor + "Promotion");
             QueenPictureBox.Location = new Point(0, 0);
             QueenPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
-            RookPictureBox.Image = AssetManager.GetTextureByTagName("Rook" + PromotionColor);
+            RookPictureBox.Image = AssetManager.GetTextureByTagName("Rook" + PromotionColor + "Promotion");
             RookPictureBox.Location = new Point(60, 0);
             RookPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
-            BishopPictureBox.Image = AssetManager.GetTextureByTagName("Bishop" + PromotionColor);
+            BishopPictureBox.Image = AssetManager.GetTextureByTagName("Bishop" + PromotionColor + "Promotion");
             BishopPictureBox.Location = new Point(120, 0);
             BishopPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
-            KnightPictureBox.Image = AssetManager.GetTextureByTagName("Knight" + PromotionColor);
+            KnightPictureBox.Image = AssetManager.GetTextureByTagName("Knight" + PromotionColor + "Promotion");
             KnightPictureBox.Location = new Point(180, 0);
             KnightPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
