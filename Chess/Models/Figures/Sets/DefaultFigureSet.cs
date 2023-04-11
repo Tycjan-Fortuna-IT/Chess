@@ -153,5 +153,38 @@
                 Chessboard.GetField(7, 1).AddChess(Pawn8);
             }
         }
+
+        public List<Tuple<int, int>> GetPromotionMap(ColorEnum Color)
+        {
+            if (Color == ColorEnum.White)
+            {
+                return new List<Tuple<int, int>>
+                {
+                    new Tuple<int, int>(0, 7),
+                    new Tuple<int, int>(1, 7),
+                    new Tuple<int, int>(2, 7),
+                    new Tuple<int, int>(3, 7),
+                    new Tuple<int, int>(4, 7),
+                    new Tuple<int, int>(5, 7),
+                    new Tuple<int, int>(6, 7),
+                    new Tuple<int, int>(7, 7)
+                };
+            }
+            else
+            {
+                return new List<Tuple<int, int>>
+                {
+                    new Tuple<int, int>(0, 0),
+                    new Tuple<int, int>(1, 0),
+                    new Tuple<int, int>(2, 0),
+                    new Tuple<int, int>(3, 0),
+                    new Tuple<int, int>(4, 0),
+                    new Tuple<int, int>(5, 0),
+                    new Tuple<int, int>(6, 0),
+                    new Tuple<int, int>(7, 0)
+                };
+            }
+        }
+        
     }
 }

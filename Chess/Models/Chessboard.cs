@@ -19,13 +19,13 @@ namespace Chess.Models
 
         private ISerializer Serializer;
 
-        private Dictionary<string, FigureSet> FigureSet;
+        private Dictionary<string, FigureSet> FigureSets;
 
         private int MoveNumber = 0;
 
         private int PassantClearMove = 3;
 
-        public Chessboard(Dictionary<string, FigureSet> FigureSet)
+        public Chessboard(Dictionary<string, FigureSet> FigureSets)
         {
             this.Uuid = Guid.NewGuid().ToString();
             this.Fields = new Field[AMOUNT_OF_FIELDS];
@@ -36,14 +36,14 @@ namespace Chess.Models
             }
 
             this.Serializer = new XMLSerializer();
-            this.FigureSet = FigureSet;
+            this.FigureSets = FigureSets;
 
             this.InitializeChessboard();
         }
 
         private void InitializeChessboard()
         {
-            foreach (FigureSet Set in FigureSet.Values)
+            foreach (FigureSet Set in this.FigureSets.Values)
             {
                 Set.PlaceFiguresOnBoard(this);
             }
@@ -145,20 +145,38 @@ namespace Chess.Models
             return false;
         }
 
-        public bool IsDiagonalMove(Field First, Field Second)
-        {
-            int xDiff = Math.Abs(Second.PosX - First.PosX);
-            int yDiff = Math.Abs(Second.PosY - Second.PosX);
-
-            return xDiff == yDiff;
-        }
-
-        public void ClearEnPassantable()
+        private void ClearEnPassantable()
         {
             foreach (Field Field in this.Fields)
                 if (!Field.IsEmpty())
                     if (Field.Chess is Pawn)
                         ((Pawn)Field.Chess).EnPassantable = false;
+        }
+
+        private bool IsDiagonalMove(Field First, Field Second)
+        {
+            int LenghtX = Math.Abs(Second.PosX - First.PosX);
+            int LenghtY = Math.Abs(Second.PosY - Second.PosX);
+
+            return LenghtX == LenghtY;
+        }
+
+        public List<Field> GetFieldsForPromotion(ColorEnum Color)
+        {
+            List<Field> PromotionFields = new List<Field>();
+
+            foreach (FigureSet FigureSet in this.FigureSets.Values)
+            {
+                foreach (Tuple<int, int> Cords in FigureSet.FigureSetPlacement.GetPromotionMap(Color))
+                {
+                    Field SuspectedField = this.GetField(Cords.Item1, Cords.Item2);
+
+                    if (!SuspectedField.IsEmpty() && SuspectedField.Chess.Color != Color && SuspectedField.Chess is Pawn)
+                        PromotionFields.Add(SuspectedField);
+                }
+            }
+
+            return PromotionFields;
         }
 
         /// <summary>

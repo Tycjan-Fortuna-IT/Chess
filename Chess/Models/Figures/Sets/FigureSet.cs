@@ -6,7 +6,7 @@
 
         private ColorEnum Color;
 
-        private IFigureSet FigureSetPlacement;
+        public IFigureSet FigureSetPlacement { get; }
 
         public FigureSet(IFigureSet FigureSetPlacement, ColorEnum Color)
         {

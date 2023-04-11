@@ -102,7 +102,59 @@ namespace ChessGUI
                 LastClicked = CurrentlyClickedField;
             }
 
+            foreach (Field Position in Board.GetFieldsForPromotion(ColorEnum.White))
+            {
+                Buttons[Position.PosX, Position.PosY].BackColor = Color.LightGoldenrodYellow;
+                this.PromotionDisplay(Position, "Black");
+            }
+
+            foreach (Field Position in Board.GetFieldsForPromotion(ColorEnum.Black))
+            {
+                Buttons[Position.PosX, Position.PosY].BackColor = Color.LightGoldenrodYellow;
+                this.PromotionDisplay(Position, "White");
+            }
+
             this.DrawFiguresOnBoard();
+        }
+
+        static PromotionPopup? PromotionPopup = null;
+        static Tuple<int, int>? PromotionFieldCords = null;
+
+        public void PromotionDisplay(Field Field, string Color)
+        {
+            if (PromotionPopup is null)
+            {
+                PromotionFieldCords = new Tuple<int, int>(Field.PosX, Field.PosY);
+
+                PromotionPopup = new PromotionPopup(this, Color);
+
+                PromotionPopup.Owner = this;
+
+                int x = this.Location.X + (this.Width - PromotionPopup.Width) / 2;
+                int y = this.Location.Y + (this.Height - PromotionPopup.Height) / 2;
+
+                PromotionPopup.Location = new Point(x, y);
+
+                PromotionPopup.Show();
+            }
+        }
+
+        public void PromoteChessTo(IChess PromotionChoice)
+        {
+            if (PromotionFieldCords is not null)
+            {
+                Field Field = Board.GetField(PromotionFieldCords.Item1, PromotionFieldCords.Item2);
+                            
+                Field.RemoveChess();
+
+                Field.AddChess(PromotionChoice);
+
+                this.CleanChessboardFields();
+                this.DrawFiguresOnBoard();
+
+                PromotionPopup = null;
+                PromotionFieldCords = null;
+            }
         }
 
         private void DrawFiguresOnBoard()
