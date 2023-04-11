@@ -8,6 +8,8 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
+        public bool HasMoved { get; set; }
+
         /// <summary>
         ///     List contatining all allowed moves that King can do.
         /// </summary>
@@ -29,6 +31,8 @@
 
             this.Texture = Color == ColorEnum.White ?
                 Properties.Resources.KingWhite : Properties.Resources.KingBlack;
+
+            this.HasMoved = false;
         }
 
         /// <summary>

@@ -96,6 +96,8 @@ namespace Chess.Models
             {
                 HistoryManager.RegisterMove(First, Second);
 
+                ChessToMove.HasMoved = true;
+
                 Second.AddChess(ChessToMove);
 
                 First.RemoveChess();

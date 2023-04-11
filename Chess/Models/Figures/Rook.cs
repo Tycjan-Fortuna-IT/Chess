@@ -8,6 +8,8 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
+        public bool HasMoved { get; set; }
+
         /// <summary>
         ///     List contatining all allowed moves that Rook can do.
         /// </summary>
@@ -25,6 +27,8 @@
 
             this.Texture = Color == ColorEnum.White ?
                 Properties.Resources.RookWhite : Properties.Resources.RookBlack;
+
+            this.HasMoved = false;
         }
 
         /// <summary>

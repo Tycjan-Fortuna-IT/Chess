@@ -8,7 +8,7 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
-        private bool HasMoved = false;
+        public bool HasMoved { get; set; }
 
         public Pawn(ColorEnum Color)
         {
@@ -16,6 +16,8 @@
 
             this.Texture = Color == ColorEnum.White ?
                 Properties.Resources.PawnWhite : Properties.Resources.PawnBlack;
+
+            this.HasMoved = false;
         }
 
         /// <summary>
@@ -56,6 +58,17 @@
                     Field ProjectedField = Field.Board.GetField(this.Field.PosX + 1, this.Field.PosY + (1 * direction));
 
                     AvailablePositions.Add(ProjectedField);
+                }
+
+                // Two fields ahead
+                if (!this.HasMoved && Field.Board.IsPositionInBounds(x, y + direction))
+                {
+                    Field AheadField = Field.Board.GetField(x, y + direction);
+
+                    if (AheadField.IsEmpty())
+                    {
+                        AvailablePositions.Add(AheadField);
+                    }
                 }
             }
 
