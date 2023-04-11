@@ -85,7 +85,8 @@ namespace ChessGUI
                 {
                     Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
 
-                    this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
+                    if (Board.HistoryManager.Moves.Count() > 0)
+                        this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
 
                     LastClicked = null;
                 }

@@ -1,5 +1,5 @@
-﻿using Chess.Models.History;
-using Chess.Models;
+﻿using Chess.Models;
+using System.ComponentModel.Design;
 
 namespace Chess.Models
 {
@@ -20,6 +20,10 @@ namespace Chess.Models
         private ISerializer Serializer;
 
         private Dictionary<string, FigureSet> FigureSet;
+
+        private int MoveNumber = 0;
+
+        private int PassantClearMove = 3;
 
         public Chessboard(Dictionary<string, FigureSet> FigureSet)
         {
@@ -94,14 +98,67 @@ namespace Chess.Models
 
             if (FieldsToMove.Contains(Second))
             {
-                HistoryManager.RegisterMove(First, Second);
-
-                ChessToMove.HasMoved = true;
+                HistoryManager.RegisterMove(First, Second, this.HandleEnPassant(First, Second));                
 
                 Second.AddChess(ChessToMove);
 
                 First.RemoveChess();
+
+                if (this.PassantClearMove == this.MoveNumber)
+                {
+                    this.ClearEnPassantable();
+                    this.PassantClearMove = this.MoveNumber + 1;
+                }
+
+                ChessToMove.MoveEvent(First, Second);
+
+                this.MoveNumber++;
             }
+        }
+
+        private bool HandleEnPassant(Field First, Field Second)
+        {
+            if (First.Chess is Pawn && Second.IsEmpty())
+            {
+                if ((Second.PosX - First.PosX < 0) && (Second.PosY - First.PosY < 0))
+                {
+                    this.GetField(Second.PosX, Second.PosY + 1).RemoveChess();
+                    return true;
+                }
+                if ((Second.PosX - First.PosX > 0) && (Second.PosY - First.PosY < 0))
+                {
+                    this.GetField(Second.PosX, Second.PosY + 1).RemoveChess();
+                    return true;
+                }
+                if ((Second.PosX - First.PosX < 0) && (Second.PosY - First.PosY > 0))
+                {
+                    this.GetField(Second.PosX, Second.PosY - 1).RemoveChess();
+                    return true;
+                }
+                if ((Second.PosX - First.PosX > 0) && (Second.PosY - First.PosY > 0))
+                {
+                    this.GetField(Second.PosX, Second.PosY - 1).RemoveChess();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool IsDiagonalMove(Field First, Field Second)
+        {
+            int xDiff = Math.Abs(Second.PosX - First.PosX);
+            int yDiff = Math.Abs(Second.PosY - Second.PosX);
+
+            return xDiff == yDiff;
+        }
+
+        public void ClearEnPassantable()
+        {
+            foreach (Field Field in this.Fields)
+                if (!Field.IsEmpty())
+                    if (Field.Chess is Pawn)
+                        ((Pawn)Field.Chess).EnPassantable = false;
         }
 
         /// <summary>

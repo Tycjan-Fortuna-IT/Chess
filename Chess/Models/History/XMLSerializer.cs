@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Chess.Models.History
+namespace Chess.Models
 {
     public class XMLSerializer : ISerializer
     {
