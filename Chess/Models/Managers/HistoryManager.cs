@@ -16,6 +16,7 @@
             ));
         }
 
+        [Obsolete]
         public void ApplyMoves(IBoard Board)
         {
 

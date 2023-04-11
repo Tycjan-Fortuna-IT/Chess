@@ -1,4 +1,5 @@
 ﻿using Chess.Models.History;
+using Chess.Models;
 
 namespace Chess.Models
 {

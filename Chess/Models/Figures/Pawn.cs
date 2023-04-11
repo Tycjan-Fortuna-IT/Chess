@@ -8,6 +8,8 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
+        private bool HasMoved = false;
+
         public Pawn(ColorEnum Color)
         {
             this.Color = Color;
@@ -24,8 +26,12 @@
         {
             List<Field> AvailablePositions = new List<Field>();
 
+            int direction = this.Color == ColorEnum.White ? -1 : 1;
+
+            ColorEnum enemyColor = this.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White;
+
             int x = Field.PosX;
-            int y = Field.PosY + (this.Color == ColorEnum.White ? -1 : 1);
+            int y = Field.PosY + direction;
 
             if (Field.Board.IsPositionInBounds(x, y))
             {
@@ -35,9 +41,21 @@
                 {
                     AvailablePositions.Add(IteratedField);
                 }
-                else if (IteratedField.Chess.Color != this.Color)
+
+                // Left side
+                if (this.Field.CheckForProjectedObstacle(new Tuple<int, int>(-1, 1 * direction), enemyColor, 1))
                 {
-                    AvailablePositions.Add(IteratedField);
+                    Field ProjectedField = Field.Board.GetField(this.Field.PosX - 1, this.Field.PosY + (1 * direction));
+
+                    AvailablePositions.Add(ProjectedField);
+                }
+
+                // Right side
+                if (this.Field.CheckForProjectedObstacle(new Tuple<int, int>(1, 1 * direction), enemyColor, 1))
+                {
+                    Field ProjectedField = Field.Board.GetField(this.Field.PosX + 1, this.Field.PosY + (1 * direction));
+
+                    AvailablePositions.Add(ProjectedField);
                 }
             }
 
