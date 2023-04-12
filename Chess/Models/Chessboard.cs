@@ -20,7 +20,7 @@ namespace Chess.Models
 
         private ISerializer Serializer;
 
-        private Dictionary<string, FigureSet> FigureSets;
+        public Dictionary<string, FigureSet> FigureSets;
 
         private int MoveNumber = 0;
 
@@ -152,6 +152,16 @@ namespace Chess.Models
                 if (!Field.IsEmpty())
                     if (Field.Chess is Pawn)
                         ((Pawn)Field.Chess).EnPassantable = false;
+        }
+
+        public bool IsFieldBeingAttacked(Field SuspectedField, ColorEnum Color)
+        {
+            foreach(Field Field in this.Fields)
+                if (!Field.IsEmpty() && Field.Chess is not King)
+                    if (Field.Chess.Color == Color && Field.Chess.GetAvailablePositions().Contains(SuspectedField))
+                        return true;
+
+            return false;
         }
 
         private bool IsDiagonalMove(Field First, Field Second)

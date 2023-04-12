@@ -8,6 +8,8 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
+        public bool HasMoved { get; set; }
+
         /// <summary>
         ///     List contatining all allowed moves that Queen can do.
         /// </summary>
@@ -29,6 +31,8 @@
 
             this.Texture = Color == ColorEnum.White ?
                 Properties.Resources.QueenWhite : Properties.Resources.QueenBlack;
+
+            this.HasMoved = false;
         }
 
         /// <summary>
@@ -38,7 +42,7 @@
         /// <param name="Second">Moved to</param>
         public void MoveEvent(Field First, Field Second)
         {
-
+            this.HasMoved = true;
         }
 
         /// <summary>

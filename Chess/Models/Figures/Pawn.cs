@@ -8,7 +8,7 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
-        private bool HasMoved = false;
+        public bool HasMoved { get; set; }
 
         public bool EnPassantable = false;
 

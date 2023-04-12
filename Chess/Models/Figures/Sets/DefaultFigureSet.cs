@@ -185,6 +185,60 @@
                 };
             }
         }
+
+        public Dictionary<string, List<Tuple<int, int>>> GetCastleFields(ColorEnum Color)
+        {
+            if (Color == ColorEnum.White)
+            {
+                return new Dictionary<string, List<Tuple<int, int>>>()
+                {
+                    { "QueensideRook", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(0, 7)
+                        } 
+                    },
+                    { "QueensideFields", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(1, 7),
+                            new Tuple<int, int>(2, 7),
+                            new Tuple<int, int>(3, 7)
+                        }
+                    },
+                    { "KingsideFields", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(5, 7),
+                            new Tuple<int, int>(6, 7),
+                        }
+                    },
+                    { "KingsideRook", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(7, 7)
+                        }
+                    },
+                };
+            }
+            else
+            {
+                return new Dictionary<string, List<Tuple<int, int>>>()
+                {
+                    { "QueensideRook", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(0, 0)
+                        }
+                    },
+                    { "QueensideFields", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(1, 0),
+                            new Tuple<int, int>(2, 0),
+                            new Tuple<int, int>(3, 0)
+                        }
+                    },
+                    { "KingsideFields", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(5, 0),
+                            new Tuple<int, int>(6, 0),
+                        }
+                    },
+                    { "KingsideRook", new List<Tuple<int, int>>() {
+                            new Tuple<int, int>(7, 0)
+                        }
+                    },
+                };
+            }
+        }
         
     }
 }

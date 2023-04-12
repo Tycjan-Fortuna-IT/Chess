@@ -12,6 +12,9 @@ namespace Chess
                 { "White", new FigureSet(new DefaultFigureSet(), ColorEnum.White) }
             });
 
+
+
+            //System.Console.WriteLine(chessboard.IsFieldBeingAttacked(chessboard.GetField(0, 2), ColorEnum.White));
             //chessboard.GetField(1, 1).AddChess(new Bishop(ColorEnum.White));
 
             //var t = chessboard.GetField(3, 3).CheckForProjectedObstacle(new Tuple<int, int>(-1, -1), ColorEnum.White, 2);

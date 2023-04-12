@@ -17,7 +17,12 @@
 
         public void PlaceFiguresOnBoard(Chessboard Chessboard)
         {
-            FigureSetPlacement.Generate(Chessboard, Figures, Color);
+            this.FigureSetPlacement.Generate(Chessboard, Figures, Color);
+        }
+
+        public Dictionary<string, List<Tuple<int, int>>> GetCastleFields(ColorEnum Color)
+        {
+            return this.FigureSetPlacement.GetCastleFields(Color);
         }
 
         //public IChess GetFigureOnPosition(int x, int y)
