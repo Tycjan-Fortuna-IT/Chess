@@ -1,6 +1,7 @@
 ﻿using Chess.Models;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Runtime.ExceptionServices;
 
 namespace Chess.Models
 {
@@ -99,11 +100,17 @@ namespace Chess.Models
 
             if (FieldsToMove.Contains(Second))
             {
-                HistoryManager.RegisterMove(First, Second, this.HandleEnPassant(First, Second));                
+                bool IsMoveEnPassant = this.HandleEnPassant(First, Second);
+                ColorEnum? CastleColor = this.HandleCastle(First, Second);
 
-                Second.AddChess(ChessToMove);
+                HistoryManager.RegisterMove(First, Second, IsMoveEnPassant, CastleColor);                
 
-                First.RemoveChess();
+                if (CastleColor is null)
+                {
+                    Second.AddChess(ChessToMove);
+
+                    First.RemoveChess();
+                }
 
                 if (this.PassantClearMove == this.MoveNumber)
                 {
@@ -115,6 +122,54 @@ namespace Chess.Models
 
                 this.MoveNumber++;
             }
+        }
+
+        private ColorEnum? HandleCastle(Field First, Field Second)
+        {
+            if (First.Chess is King && Second.Chess is Rook)
+            {
+                Dictionary<string, List<Tuple<int, int>>> Placement =
+                    this.FigureSets[First.Chess.Color == ColorEnum.White ? "White" : "Black"].GetCastleFields(First.Chess.Color);
+                
+                Tuple<int, int> KingPosition = Placement["KingField"].First();
+                Field KingField = this.GetField(KingPosition.Item1, KingPosition.Item2);
+
+                // Kingside castle
+                if (Second.PosX - First.PosX == 3)
+                {
+                    Tuple<int, int> KingsideRook = Placement["KingsideRook"].First();
+                    Field KingsideRookField = this.GetField(KingsideRook.Item1, KingsideRook.Item2);
+
+                    Field KingTo = this.GetField(KingField.PosX + 2, KingField.PosY);
+                    Field RookTo = this.GetField(KingField.PosX + 1, KingField.PosY);
+
+                    KingTo.AddChess(KingField.Chess);
+                    KingField.RemoveChess();
+                    RookTo.AddChess(KingsideRookField.Chess);
+                    KingsideRookField.RemoveChess();
+
+                    return KingTo.Chess.Color;
+                }
+
+                // Quenside castle
+                else if (Second.PosX - First.PosX == -4)
+                {
+                    Tuple<int, int> QueensideRook = Placement["QueensideRook"].First();
+                    Field QueensideRookField = this.GetField(QueensideRook.Item1, QueensideRook.Item2);
+
+                    Field KingTo = this.GetField(KingField.PosX - 2, KingField.PosY);
+                    Field RookTo = this.GetField(KingField.PosX - 1, KingField.PosY);
+
+                    KingTo.AddChess(KingField.Chess);
+                    KingField.RemoveChess();
+                    RookTo.AddChess(QueensideRookField.Chess);
+                    QueensideRookField.RemoveChess();
+
+                    return KingTo.Chess.Color;
+                }
+            }
+
+            return null;
         }
 
         private bool HandleEnPassant(Field First, Field Second)
@@ -157,9 +212,41 @@ namespace Chess.Models
         public bool IsFieldBeingAttacked(Field SuspectedField, ColorEnum Color)
         {
             foreach(Field Field in this.Fields)
+            {
                 if (!Field.IsEmpty() && Field.Chess is not King)
-                    if (Field.Chess.Color == Color && Field.Chess.GetAvailablePositions().Contains(SuspectedField))
+                {
+                    List<Field> List = Field.Chess.GetAvailablePositions();
+
+                    if (Field.Chess is Pawn)
+                    {
+                        int Direction = Color == ColorEnum.White ? -1 : 1;
+
+                        Field FieldAhead = this.GetField(Field.PosX, Field.PosY + Direction);
+
+                        if (IsPositionInBounds(Field.PosX - 1, Field.PosY + (1 * Direction)))
+                        {
+                            Field LeftField = Field.Board.GetField(Field.PosX - 1, Field.PosY + (1 * Direction));
+
+                            if (!List.Contains(LeftField))
+                                List.Add(LeftField);
+                        }
+
+                        if (IsPositionInBounds(Field.PosX + 1, Field.PosY + (1 * Direction)))
+                        {
+                            Field RightField = Field.Board.GetField(Field.PosX + 1, Field.PosY + (1 * Direction));
+
+                            if (!List.Contains(RightField))
+                                List.Add(RightField);
+                        }
+
+                        if (List.Contains(FieldAhead))
+                            List.Remove(FieldAhead);                        
+                    }
+
+                    if (Field.Chess.Color == Color && List.Contains(SuspectedField))
                         return true;
+                }
+            }
 
             return false;
         }

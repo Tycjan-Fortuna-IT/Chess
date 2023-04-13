@@ -202,6 +202,11 @@
                             new Tuple<int, int>(3, 7)
                         }
                     },
+                    { "KingField", new List<Tuple<int, int>>()
+                        {
+                            new Tuple<int, int>(4, 7),
+                        }
+                    },
                     { "KingsideFields", new List<Tuple<int, int>>() {
                             new Tuple<int, int>(5, 7),
                             new Tuple<int, int>(6, 7),
@@ -225,6 +230,11 @@
                             new Tuple<int, int>(1, 0),
                             new Tuple<int, int>(2, 0),
                             new Tuple<int, int>(3, 0)
+                        }
+                    },
+                    { "KingField", new List<Tuple<int, int>>()
+                        {
+                            new Tuple<int, int>(4, 0),
                         }
                     },
                     { "KingsideFields", new List<Tuple<int, int>>() {

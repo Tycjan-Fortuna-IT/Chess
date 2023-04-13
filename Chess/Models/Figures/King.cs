@@ -79,7 +79,7 @@
             }
 
             // Castle
-            if (!this.HasMoved)
+            if (this.Field.Board.FigureSets.Count() > 0 && !this.HasMoved)
             {
                 Dictionary<string, List<Tuple<int, int>>> Placement = 
                     this.Field.Board.FigureSets[this.Color == ColorEnum.White ? "White" : "Black"].GetCastleFields(this.Color);

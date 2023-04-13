@@ -6,20 +6,9 @@ namespace Chess.Models
     {
         public List<Move> Moves = new List<Move>();
 
-        public void RegisterMove(Field First, Field Second, bool Passant)
+        public void RegisterMove(Field First, Field Second, bool Passant, ColorEnum? CastleColor)
         {
-            if (!Passant)
-            {
-                Moves.Add(new Move(
-                    new Tuple<int, int>(First.PosX, First.PosY),
-                    new Tuple<int, int>(Second.PosX, Second.PosY),
-                    First.Chess.ToString(),
-                    First.Chess.Color,
-                    !Second.IsEmpty() ? Second.Chess.ToString() : null,
-                    !Second.IsEmpty() ? Second.Chess.Color : null
-                ));
-            }
-            else
+            if (Passant)
             {
                 Moves.Add(new Move(
                     new Tuple<int, int>(First.PosX, First.PosY),
@@ -30,7 +19,30 @@ namespace Chess.Models
                     First.Chess.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White
                 ));
             }
-
+            else if (CastleColor is not null)
+            {
+                Moves.Add(new Move(
+                    new Tuple<int, int>(First.PosX, First.PosY),
+                    new Tuple<int, int>(Second.PosX, Second.PosY),
+                    "King",
+                    CastleColor,
+                    "King",
+                    CastleColor,
+                    false,
+                    true
+                ));
+            }
+            else
+            {
+                Moves.Add(new Move(
+                    new Tuple<int, int>(First.PosX, First.PosY),
+                    new Tuple<int, int>(Second.PosX, Second.PosY),
+                    First.Chess.ToString(),
+                    First.Chess.Color,
+                    !Second.IsEmpty() ? Second.Chess.ToString() : null,
+                    !Second.IsEmpty() ? Second.Chess.Color : null
+                ));
+            }
         }
 
         public void RegisterPromotion(Field PromotionField, IChess PromotionChoice)

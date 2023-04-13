@@ -199,6 +199,8 @@ namespace ChessGUI
 
             bool PromotionMove = Move.PromotionMove;
 
+            bool CastleMove = Move.CastleMove;
+
             PictureBox PictureBox = new PictureBox();
 
 
@@ -212,6 +214,13 @@ namespace ChessGUI
                 PictureBox.Location = new Point(30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
 
                 Label.Text = "Promotion!";
+            }
+            else if (CastleMove)
+            {
+                PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor);
+                PictureBox.Location = new Point(30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+
+                Label.Text = "Castle!";
             }
             else
             {
