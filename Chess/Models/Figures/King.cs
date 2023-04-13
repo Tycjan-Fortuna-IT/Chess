@@ -85,33 +85,20 @@
                     this.Field.Board.FigureSets[this.Color == ColorEnum.White ? "White" : "Black"].GetCastleFields(this.Color);
 
                 Tuple<int, int> QueensideRook = Placement["QueensideRook"].First();
-                List<Tuple<int, int>> Queenside = Placement["QueensideFields"];
-                List<Tuple<int, int>> Kingside = Placement["KingsideFields"];
                 Tuple<int, int> KingsideRook = Placement["KingsideRook"].First();
 
                 Field QueensideRookField = this.Field.Board.GetField(QueensideRook.Item1, QueensideRook.Item2);
                 Field KingsideRookField = this.Field.Board.GetField(KingsideRook.Item1, KingsideRook.Item2);
-
-                List<Field> QueensideFields = new List<Field>();
-                List<Field> KingsideFields = new List<Field>();
-
-                foreach (Tuple<int, int> Tuple in Queenside)
-                {
-                    QueensideFields.Add(this.Field.Board.GetField(Tuple.Item1, Tuple.Item2));
-                }
-
-                foreach (Tuple<int, int> Tuple in Kingside)
-                {
-                    KingsideFields.Add(this.Field.Board.GetField(Tuple.Item1, Tuple.Item2));
-                }
 
                 if (QueensideRookField.Chess is Rook && !QueensideRookField.Chess.HasMoved)
                 {
                     bool AreQueensideFieldsEmpty = true;
                     bool AreQueensideFieldsBeingAttacked = false;
 
-                    foreach (Field QueensideField in QueensideFields)
+                    foreach (Tuple<int, int> Queenside in Placement["QueensideFields"])
                     {
+                        Field QueensideField = this.Field.Board.GetField(Queenside.Item1, Queenside.Item2);
+
                         if (!QueensideField.IsEmpty())
                         {
                             AreQueensideFieldsEmpty = false;
@@ -125,7 +112,6 @@
                         }
                     }
 
-
                     if (AreQueensideFieldsEmpty && !AreQueensideFieldsBeingAttacked)
                     {
                         AvailablePositions.Add(QueensideRookField);
@@ -137,8 +123,10 @@
                     bool AreKingsideFieldsEmpty = true;
                     bool AreKingsideFieldsBeingAttacked = false;
 
-                    foreach (Field KingsideField in KingsideFields)
+                    foreach (Tuple<int, int> Kingside in Placement["KingsideFields"])
                     {
+                        Field KingsideField = this.Field.Board.GetField(Kingside.Item1, Kingside.Item2);
+
                         if (!KingsideField.IsEmpty())
                         {
                             AreKingsideFieldsEmpty = false;
