@@ -75,6 +75,11 @@ namespace Chess.Models
                     Move.SetAttribute("Choice", m.CapturedChessName);
                 }
 
+                if (m.CheckMove)
+                {
+                    Move.SetAttribute("CheckMove", m.CheckMove.ToString());
+                }
+
                 //if (m.CapturedChessName is not null)
                 //{
                 //    Move.SetAttribute("Captured", m.CapturedChessName);
@@ -126,6 +131,10 @@ namespace Chess.Models
                     }
 
                     Board.PromoteChessTo(Board.GetField(FromX, FromY), Chess);
+                }
+                else if(moveNode.Attributes["CheckMove"] is not null)
+                {
+
                 }
                 else
                 {

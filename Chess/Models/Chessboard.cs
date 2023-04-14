@@ -103,7 +103,7 @@ namespace Chess.Models
                 bool IsMoveEnPassant = this.HandleEnPassant(First, Second);
                 ColorEnum? CastleColor = this.HandleCastle(First, Second);
 
-                HistoryManager.RegisterMove(First, Second, IsMoveEnPassant, CastleColor);                
+                this.HistoryManager.RegisterMove(First, Second, IsMoveEnPassant, CastleColor);                
 
                 if (CastleColor is null)
                 {
@@ -121,6 +121,15 @@ namespace Chess.Models
                 ChessToMove.MoveEvent(First, Second);
 
                 this.MoveNumber++;
+
+                if (this.CheckIfKingIsBeingChecked(ColorEnum.White))
+                {
+                    this.HistoryManager.RegisterKingCheck(ColorEnum.White);
+                }
+                else if (this.CheckIfKingIsBeingChecked(ColorEnum.Black))
+                {
+                    this.HistoryManager.RegisterKingCheck(ColorEnum.Black);
+                }
             }
         }
 
@@ -209,6 +218,34 @@ namespace Chess.Models
                         ((Pawn)Field.Chess).EnPassantable = false;
         }
 
+        private bool CheckIfKingIsBeingChecked(ColorEnum Color)
+        {
+            King King = this.GetSpecificKing(Color);
+
+            if (King is null)
+                return false;
+
+            return this.IsFieldBeingAttacked(King.Field, King.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White);
+        }
+
+        private bool CheckIfKingIsCheckmated(ColorEnum Color) 
+        {
+            King King = this.GetSpecificKing(Color);
+
+            List<Field> Fields = King.GetAvailablePositions();
+
+            return this.CheckIfKingIsBeingChecked(Color) && Fields.Count() == 0;
+        }
+
+        private King? GetSpecificKing(ColorEnum Color)
+        {
+            foreach (Field Field in this.Fields)
+                if (!Field.IsEmpty() && Field.Chess is King && Field.Chess.Color == Color)
+                    return (King)Field.Chess;
+
+            return null;
+        }
+
         public bool IsFieldBeingAttacked(Field SuspectedField, ColorEnum Color)
         {
             foreach(Field Field in this.Fields)
@@ -220,8 +257,6 @@ namespace Chess.Models
                     if (Field.Chess is Pawn)
                     {
                         int Direction = Color == ColorEnum.White ? -1 : 1;
-
-                        Field FieldAhead = this.GetField(Field.PosX, Field.PosY + Direction);
 
                         if (IsPositionInBounds(Field.PosX - 1, Field.PosY + (1 * Direction)))
                         {
@@ -239,8 +274,13 @@ namespace Chess.Models
                                 List.Add(RightField);
                         }
 
-                        if (List.Contains(FieldAhead))
-                            List.Remove(FieldAhead);                        
+                        if (this.IsPositionInBounds(Field.PosX, Field.PosY + Direction))
+                        {
+                            Field FieldAhead = this.GetField(Field.PosX, Field.PosY + Direction);
+
+                            if (List.Contains(FieldAhead))
+                                List.Remove(FieldAhead);                        
+                        }
                     }
 
                     if (Field.Chess.Color == Color && List.Contains(SuspectedField))

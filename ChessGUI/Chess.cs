@@ -85,8 +85,7 @@ namespace ChessGUI
                 {
                     Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
 
-                    if (Board.HistoryManager.Moves.Count() > 0)
-                        this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
+                    this.RefreshHistory();
 
                     LastClicked = null;
                 }
@@ -147,7 +146,7 @@ namespace ChessGUI
 
                 Board.PromoteChessTo(Field, PromotionChoice);
 
-                this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
+                this.RefreshHistory();
 
                 this.CleanChessboardFields();
                 this.DrawFiguresOnBoard();
@@ -193,6 +192,18 @@ namespace ChessGUI
             }
         }
 
+        static int LastHistoryIndex = 0;
+
+        private void RefreshHistory()
+        {
+            for (int i = LastHistoryIndex; i < Board.HistoryManager.Moves.Count(); i++)
+            {
+                this.AddNewHistoryElement(Board.HistoryManager.Moves[i], LastHistoryIndex);
+
+                LastHistoryIndex++;
+            }
+        }
+
         private void AddNewHistoryElement(Move Move, int HistoryIndex)
         {
             bool CaptureMove = Move.CapturedChessName is not null && Move.CapturedChessColor is not null;
@@ -200,6 +211,8 @@ namespace ChessGUI
             bool PromotionMove = Move.PromotionMove;
 
             bool CastleMove = Move.CastleMove;
+
+            bool CheckMove = Move.CheckMove;
 
             PictureBox PictureBox = new PictureBox();
 
@@ -211,16 +224,23 @@ namespace ChessGUI
             if (PromotionMove)
             {
                 PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Promotion");
-                PictureBox.Location = new Point(30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+                PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
 
                 Label.Text = "Promotion!";
             }
             else if (CastleMove)
             {
                 PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor);
-                PictureBox.Location = new Point(30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+                PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
 
                 Label.Text = "Castle!";
+            }
+            else if (CheckMove)
+            {
+                PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor);
+                PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
+
+                Label.Text = "In check!";
             }
             else
             {
@@ -234,30 +254,36 @@ namespace ChessGUI
                     PictureBox CapturedPictureBox = new PictureBox();
 
                     CapturedPictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Captured");
-                    CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+                    CapturedPictureBox.Location = new Point(60, 0 + HistoryIndex * 60 + ScrollPosition.Y);
                     CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
                     HistoryPanel.Controls.Add(CapturedPictureBox);
                 }
 
-                PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+                PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
             }
 
-            Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+            Label.Location = new Point(120, 20 + HistoryIndex * 60 + ScrollPosition.Y);
 
             HistoryPanel.Controls.Add(Label);
 
             PictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
             HistoryPanel.Controls.Add(PictureBox);
+
+            HistoryPanel.VerticalScroll.Value = HistoryPanel.VerticalScroll.Maximum;
         }
 
-        private void LoadHistory()
+        private void CleanHistory()
         {
-            for (int i = 0; i < Board.HistoryManager.Moves.Count(); i++)
+            while (HistoryPanel.Controls.Count > 0)
             {
-                this.AddNewHistoryElement(Board.HistoryManager.Moves[i], i + 1);
+                HistoryPanel.Controls[0].Dispose();
             }
+
+            Board.HistoryManager.Moves = new List<Move>();
+
+            LastHistoryIndex = 0;
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -292,12 +318,14 @@ namespace ChessGUI
         {
             string filePath = openFileDialog1.FileName;
 
+            this.CleanHistory();
+
             Board.Load(filePath);
 
             this.CleanChessboardFields();
             this.DrawFiguresOnBoard();
 
-            this.LoadHistory();
+            this.RefreshHistory();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

@@ -18,9 +18,11 @@
 
         public bool CastleMove;
 
+        public bool CheckMove;
+
         public Move(Tuple<int, int> FromField, Tuple<int, int> ToField, string MovedChess,
             ColorEnum? MovedChessColor, string? CapturedChessName, ColorEnum? CapturedChessColor,
-            bool PromotionMove = false, bool CastleMove = false)
+            bool PromotionMove = false, bool CastleMove = false, bool CheckMove = false)
         {
             this.FromField = FromField;
             this.ToField = ToField;
@@ -30,6 +32,7 @@
             this.CapturedChessColor = CapturedChessColor;
             this.PromotionMove = PromotionMove;
             this.CastleMove = CastleMove;
+            this.CheckMove = CheckMove;
         }
     }
 }

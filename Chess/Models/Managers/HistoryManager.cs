@@ -58,6 +58,21 @@ namespace Chess.Models
             ));
         }
 
+        public void RegisterKingCheck(ColorEnum Color)
+        {
+            Moves.Add(new Move(
+                new Tuple<int, int>(-1, -1),
+                new Tuple<int, int>(-1, -1),
+                "King",
+                Color,
+                "King",
+                Color,
+                false,
+                false,
+                true
+            ));
+        }
+
         [Obsolete]
         public void ApplyMoves(IBoard Board)
         {
