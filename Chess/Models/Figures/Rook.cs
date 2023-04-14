@@ -8,6 +8,8 @@
 
         public System.Drawing.Bitmap Texture { get; }
 
+        public bool HasMoved { get; set; }
+
         /// <summary>
         ///     List contatining all allowed moves that Rook can do.
         /// </summary>
@@ -25,6 +27,18 @@
 
             this.Texture = Color == ColorEnum.White ?
                 Properties.Resources.RookWhite : Properties.Resources.RookBlack;
+
+            this.HasMoved = false;
+        }
+
+        /// <summary>
+        ///     Move event called whenever chess is moved from one field to another.
+        /// </summary>
+        /// <param name="First">Moved from</param>
+        /// <param name="Second">Moved to</param>
+        public void MoveEvent(Field First, Field Second)
+        {
+            this.HasMoved = true;
         }
 
         /// <summary>

@@ -68,14 +68,22 @@ namespace ChessGUI
 
         private void ClickChessboardField(object sender, EventArgs args)
         {
-            this.CleanChessboardFields();
-
             Button ClickedButton = (Button)sender;
 
             int FieldPositionX = ClickedButton.Location.X / (ChessboardPanel.Width / Chessboard.WIDTH);
             int FieldPositionY = ClickedButton.Location.Y / (ChessboardPanel.Height / Chessboard.HEIGHT);
 
             Field CurrentlyClickedField = Board.GetField(FieldPositionX, FieldPositionY);
+
+            if (LastClicked is null)
+            {
+                if (Board.IsWhiteMove && CurrentlyClickedField.Chess.Color != ColorEnum.White)
+                    return;
+                else if (!Board.IsWhiteMove && CurrentlyClickedField.Chess.Color != ColorEnum.Black)
+                    return;
+            }
+
+            this.CleanChessboardFields();
 
             if (LastClicked is not null)
             {
@@ -85,7 +93,7 @@ namespace ChessGUI
                 {
                     Board.MoveFromFieldToField(LastClickedField, CurrentlyClickedField);
 
-                    this.AddNewHistoryElement(Board.HistoryManager.Moves.Last(), Board.HistoryManager.Moves.Count());
+                    this.RefreshHistory();
 
                     LastClicked = null;
                 }
@@ -101,7 +109,59 @@ namespace ChessGUI
                 LastClicked = CurrentlyClickedField;
             }
 
+            foreach (Field Position in Board.GetFieldsForPromotion(ColorEnum.White))
+            {
+                Buttons[Position.PosX, Position.PosY].BackColor = Color.LightGoldenrodYellow;
+                this.PromotionDisplay(Position, "Black");
+            }
+
+            foreach (Field Position in Board.GetFieldsForPromotion(ColorEnum.Black))
+            {
+                Buttons[Position.PosX, Position.PosY].BackColor = Color.LightGoldenrodYellow;
+                this.PromotionDisplay(Position, "White");
+            }
+
             this.DrawFiguresOnBoard();
+        }
+
+        static PromotionPopup? PromotionPopup = null;
+        static Tuple<int, int>? PromotionFieldCords = null;
+
+        public void PromotionDisplay(Field Field, string Color)
+        {
+            if (PromotionPopup is null)
+            {
+                PromotionFieldCords = new Tuple<int, int>(Field.PosX, Field.PosY);
+
+                PromotionPopup = new PromotionPopup(this, Color);
+
+                PromotionPopup.Owner = this;
+
+                int x = this.Location.X + (this.Width - PromotionPopup.Width) / 2;
+                int y = this.Location.Y + (this.Height - PromotionPopup.Height) / 2;
+
+                PromotionPopup.Location = new Point(x, y);
+
+                PromotionPopup.Show();
+            }
+        }
+
+        public void PromoteChessTo(IChess PromotionChoice)
+        {
+            if (PromotionFieldCords is not null)
+            {
+                Field Field = Board.GetField(PromotionFieldCords.Item1, PromotionFieldCords.Item2);
+
+                Board.PromoteChessTo(Field, PromotionChoice);
+
+                this.RefreshHistory();
+
+                this.CleanChessboardFields();
+                this.DrawFiguresOnBoard();
+
+                PromotionPopup = null;
+                PromotionFieldCords = null;
+            }
         }
 
         private void DrawFiguresOnBoard()
@@ -140,47 +200,103 @@ namespace ChessGUI
             }
         }
 
+        static int LastHistoryIndex = 0;
+
+        private void RefreshHistory()
+        {
+            for (int i = LastHistoryIndex; i < Board.HistoryManager.Moves.Count(); i++)
+            {
+                this.AddNewHistoryElement(Board.HistoryManager.Moves[i], LastHistoryIndex);
+
+                LastHistoryIndex++;
+            }
+        }
+
         private void AddNewHistoryElement(Move Move, int HistoryIndex)
         {
             bool CaptureMove = Move.CapturedChessName is not null && Move.CapturedChessColor is not null;
 
+            bool PromotionMove = Move.PromotionMove;
+
+            bool CastleMove = Move.CastleMove;
+
+            bool CheckMove = Move.CheckMove;
+
             PictureBox PictureBox = new PictureBox();
 
-            Label Label = new Label();
 
             Point ScrollPosition = HistoryPanel.AutoScrollPosition;
 
-            Label.Text = string.Format("({0}, {1}) to ({2}, {3})",
-                Move.FromField.Item1, Move.FromField.Item2, Move.ToField.Item1, Move.ToField.Item2);
+            Label Label = new Label();
 
-            Label.Location = new Point(120, 20 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
+            if (PromotionMove)
+            {
+                PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Promotion");
+                PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
+
+                Label.Text = "Promotion!";
+            }
+            else if (CastleMove)
+            {
+                PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor);
+                PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
+
+                Label.Text = "Castle!";
+            }
+            else if (CheckMove)
+            {
+                PictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor);
+                PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
+
+                Label.Text = "In check!";
+
+                if (Board.CheckIfKingIsCheckmated(Move.CapturedChessColor ?? ColorEnum.Black))
+                {
+                    Label.Text = "Checkmate!";
+                }
+            }
+            else
+            {
+                PictureBox.Image = AssetManager.GetTextureByTagName(Move.MovedChess + Move.MovedChessColor);
+
+                Label.Text = string.Format("({0}, {1}) to ({2}, {3})",
+                    Move.FromField.Item1, Move.FromField.Item2, Move.ToField.Item1, Move.ToField.Item2);
+
+                if (CaptureMove)
+                {
+                    PictureBox CapturedPictureBox = new PictureBox();
+
+                    CapturedPictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Captured");
+                    CapturedPictureBox.Location = new Point(60, 0 + HistoryIndex * 60 + ScrollPosition.Y);
+                    CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+
+                    HistoryPanel.Controls.Add(CapturedPictureBox);
+                }
+
+                PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
+            }
+
+            Label.Location = new Point(120, 20 + HistoryIndex * 60 + ScrollPosition.Y);
 
             HistoryPanel.Controls.Add(Label);
 
-            PictureBox.Image = AssetManager.GetTextureByTagName(Move.MovedChess + Move.MovedChessColor);
-            PictureBox.Location = new Point(CaptureMove ? 0 : 30, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
             PictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
             HistoryPanel.Controls.Add(PictureBox);
 
-            if (CaptureMove)
-            {
-                PictureBox CapturedPictureBox = new PictureBox();
-
-                CapturedPictureBox.Image = AssetManager.GetTextureByTagName(Move.CapturedChessName + Move.CapturedChessColor + "Captured");
-                CapturedPictureBox.Location = new Point(60, 0 + (HistoryIndex - 1) * 60 + ScrollPosition.Y);
-                CapturedPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-
-                HistoryPanel.Controls.Add(CapturedPictureBox);
-            }
+            HistoryPanel.VerticalScroll.Value = HistoryPanel.VerticalScroll.Maximum;
         }
 
-        private void LoadHistory()
+        private void CleanHistory()
         {
-            for (int i = 0; i < Board.HistoryManager.Moves.Count(); i++)
+            while (HistoryPanel.Controls.Count > 0)
             {
-                this.AddNewHistoryElement(Board.HistoryManager.Moves[i], i + 1);
+                HistoryPanel.Controls[0].Dispose();
             }
+
+            Board.HistoryManager.Moves = new List<Move>();
+
+            LastHistoryIndex = 0;
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -215,12 +331,14 @@ namespace ChessGUI
         {
             string filePath = openFileDialog1.FileName;
 
+            this.CleanHistory();
+
             Board.Load(filePath);
 
             this.CleanChessboardFields();
             this.DrawFiguresOnBoard();
 
-            this.LoadHistory();
+            this.RefreshHistory();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

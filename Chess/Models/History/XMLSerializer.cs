@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Chess.Models.History
+namespace Chess.Models
 {
     public class XMLSerializer : ISerializer
     {
@@ -68,6 +68,18 @@ namespace Chess.Models.History
                 Move.SetAttribute("ToX", m.ToField.Item1.ToString());
                 Move.SetAttribute("ToY", m.ToField.Item2.ToString());
 
+                if (m.PromotionMove)
+                {
+                    Move.SetAttribute("Promotion", "true");
+                    Move.SetAttribute("Color", m.MovedChessColor == ColorEnum.White ? "White" : "Black");
+                    Move.SetAttribute("Choice", m.CapturedChessName);
+                }
+
+                if (m.CheckMove)
+                {
+                    Move.SetAttribute("CheckMove", m.CheckMove.ToString());
+                }
+
                 //if (m.CapturedChessName is not null)
                 //{
                 //    Move.SetAttribute("Captured", m.CapturedChessName);
@@ -103,7 +115,31 @@ namespace Chess.Models.History
                 int ToY = int.Parse(moveNode.Attributes["ToY"].Value);
                 //string? captured = moveNode.Attributes["Captured"].Value;
 
-                Board.MoveFromFieldToField(Board.GetField(FromX, FromY), Board.GetField(ToX, ToY));
+                if (moveNode.Attributes["Promotion"] is not null)
+                {
+                    ColorEnum Color = moveNode.Attributes["Color"].Value == "White" ? ColorEnum.White : ColorEnum.Black;
+                    IChess Chess = new Queen(Color);
+
+                    switch(moveNode.Attributes["Choice"].Value)
+                    {
+                        case "Rook":
+                            Chess = new Rook(Color); break;
+                        case "Knight":
+                            Chess = new Knight(Color); break;
+                        case "Bishop":
+                            Chess = new Bishop(Color); break;
+                    }
+
+                    Board.PromoteChessTo(Board.GetField(FromX, FromY), Chess);
+                }
+                else if(moveNode.Attributes["CheckMove"] is not null)
+                {
+
+                }
+                else
+                {
+                    Board.MoveFromFieldToField(Board.GetField(FromX, FromY), Board.GetField(ToX, ToY));
+                }
             }
         }
     }

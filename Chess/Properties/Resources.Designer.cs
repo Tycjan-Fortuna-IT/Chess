@@ -83,6 +83,16 @@ namespace Chess.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BishopBlackPromotion {
+            get {
+                object obj = ResourceManager.GetObject("BishopBlackPromotion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BishopWhite {
             get {
                 object obj = ResourceManager.GetObject("BishopWhite", resourceCulture);
@@ -96,6 +106,16 @@ namespace Chess.Properties {
         internal static System.Drawing.Bitmap BishopWhiteCaptured {
             get {
                 object obj = ResourceManager.GetObject("BishopWhiteCaptured", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BishopWhitePromotion {
+            get {
+                object obj = ResourceManager.GetObject("BishopWhitePromotion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,6 +163,16 @@ namespace Chess.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap KnightBlackPromotion {
+            get {
+                object obj = ResourceManager.GetObject("KnightBlackPromotion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap KnightWhite {
             get {
                 object obj = ResourceManager.GetObject("KnightWhite", resourceCulture);
@@ -156,6 +186,16 @@ namespace Chess.Properties {
         internal static System.Drawing.Bitmap KnightWhiteCaptured {
             get {
                 object obj = ResourceManager.GetObject("KnightWhiteCaptured", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KnightWhitePromotion {
+            get {
+                object obj = ResourceManager.GetObject("KnightWhitePromotion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,6 +263,16 @@ namespace Chess.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap QueenBlackPromotion {
+            get {
+                object obj = ResourceManager.GetObject("QueenBlackPromotion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap QueenWhite {
             get {
                 object obj = ResourceManager.GetObject("QueenWhite", resourceCulture);
@@ -236,6 +286,16 @@ namespace Chess.Properties {
         internal static System.Drawing.Bitmap QueenWhiteCaptured {
             get {
                 object obj = ResourceManager.GetObject("QueenWhiteCaptured", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap QueenWhitePromotion {
+            get {
+                object obj = ResourceManager.GetObject("QueenWhitePromotion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,6 +323,16 @@ namespace Chess.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RookBlackPromotion {
+            get {
+                object obj = ResourceManager.GetObject("RookBlackPromotion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RookWhite {
             get {
                 object obj = ResourceManager.GetObject("RookWhite", resourceCulture);
@@ -276,6 +346,16 @@ namespace Chess.Properties {
         internal static System.Drawing.Bitmap RookWhiteCaptured {
             get {
                 object obj = ResourceManager.GetObject("RookWhiteCaptured", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RookWhitePromotion {
+            get {
+                object obj = ResourceManager.GetObject("RookWhitePromotion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
