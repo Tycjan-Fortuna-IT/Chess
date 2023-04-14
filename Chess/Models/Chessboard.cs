@@ -27,6 +27,8 @@ namespace Chess.Models
 
         private int PassantClearMove = 3;
 
+        public bool IsWhiteMove = true;
+
         public Chessboard(Dictionary<string, FigureSet> FigureSets)
         {
             this.Uuid = Guid.NewGuid().ToString();
@@ -130,6 +132,8 @@ namespace Chess.Models
                 {
                     this.HistoryManager.RegisterKingCheck(ColorEnum.Black);
                 }
+
+                this.IsWhiteMove = !this.IsWhiteMove;
             }
         }
 

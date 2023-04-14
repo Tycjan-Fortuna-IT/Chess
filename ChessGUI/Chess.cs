@@ -68,14 +68,22 @@ namespace ChessGUI
 
         private void ClickChessboardField(object sender, EventArgs args)
         {
-            this.CleanChessboardFields();
-
             Button ClickedButton = (Button)sender;
 
             int FieldPositionX = ClickedButton.Location.X / (ChessboardPanel.Width / Chessboard.WIDTH);
             int FieldPositionY = ClickedButton.Location.Y / (ChessboardPanel.Height / Chessboard.HEIGHT);
 
             Field CurrentlyClickedField = Board.GetField(FieldPositionX, FieldPositionY);
+
+            if (LastClicked is null)
+            {
+                if (Board.IsWhiteMove && CurrentlyClickedField.Chess.Color != ColorEnum.White)
+                    return;
+                else if (!Board.IsWhiteMove && CurrentlyClickedField.Chess.Color != ColorEnum.Black)
+                    return;
+            }
+
+            this.CleanChessboardFields();
 
             if (LastClicked is not null)
             {
@@ -242,11 +250,7 @@ namespace ChessGUI
 
                 Label.Text = "In check!";
 
-                bool test = Board.CheckIfKingIsCheckmated(Move.CapturedChessColor ?? ColorEnum.Black);
-
-                Buttons[0, 4].Text = test.ToString();
-
-                if (test)
+                if (Board.CheckIfKingIsCheckmated(Move.CapturedChessColor ?? ColorEnum.Black))
                 {
                     Label.Text = "Checkmate!";
                 }
