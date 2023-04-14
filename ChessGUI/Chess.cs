@@ -241,6 +241,15 @@ namespace ChessGUI
                 PictureBox.Location = new Point(30, 0 + HistoryIndex * 60 + ScrollPosition.Y);
 
                 Label.Text = "In check!";
+
+                bool test = Board.CheckIfKingIsCheckmated(Move.CapturedChessColor ?? ColorEnum.Black);
+
+                Buttons[0, 4].Text = test.ToString();
+
+                if (test)
+                {
+                    Label.Text = "Checkmate!";
+                }
             }
             else
             {

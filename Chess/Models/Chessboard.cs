@@ -228,13 +228,40 @@ namespace Chess.Models
             return this.IsFieldBeingAttacked(King.Field, King.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White);
         }
 
-        private bool CheckIfKingIsCheckmated(ColorEnum Color) 
+        public bool CheckIfKingIsCheckmated(ColorEnum Color) 
         {
-            King King = this.GetSpecificKing(Color);
+            Dictionary<IChess, List<Field>> Fields = this.GetLegalMovesForPlayer(Color);
 
-            List<Field> Fields = King.GetAvailablePositions();
+            bool IsCheckmate = true;
 
-            return this.CheckIfKingIsBeingChecked(Color) && Fields.Count() == 0;
+            foreach (KeyValuePair<IChess, List<Field>> Position in Fields)
+            {
+                IChess SuspectedDefender = Position.Key;
+                Field InitialDefenderField = SuspectedDefender.Field;
+
+                foreach (Field MoveToField in Position.Value)
+                {
+                    IChess? MoveToChess = MoveToField.Chess;
+
+                    MoveToField.RemoveChess();
+                    MoveToField.AddChess(SuspectedDefender);
+
+                    InitialDefenderField.RemoveChess();
+
+                    bool temp = this.CheckIfKingIsBeingChecked(Color);
+
+                    MoveToField.RemoveChess();
+                    InitialDefenderField.AddChess(SuspectedDefender);
+
+                    if (MoveToChess is not null)
+                        MoveToField.AddChess(MoveToChess);
+
+                    if (!temp)
+                        IsCheckmate = false;
+                }
+            }
+
+            return IsCheckmate;
         }
 
         private King? GetSpecificKing(ColorEnum Color)
@@ -315,6 +342,26 @@ namespace Chess.Models
             }
 
             return PromotionFields;
+        }
+
+        public Dictionary<IChess, List<Field>> GetLegalMovesForPlayer(ColorEnum Color)
+        {
+            Dictionary<IChess, List<Field>> LegalMovesForPlayer = new Dictionary<IChess, List<Field>>();
+            List<Field> Positions = new List<Field>();
+
+            foreach (Field Field in this.Fields)
+            {
+                if (!Field.IsEmpty() && Field.Chess.Color == Color)
+                {
+                    foreach (Field f in Field.Chess.GetAvailablePositions())
+                    {
+                        Positions.Add(f);
+                    }
+                    LegalMovesForPlayer.Add(Field.Chess, Positions);
+                }
+            }
+
+            return LegalMovesForPlayer;
         }
 
         public void PromoteChessTo(Field PromotionField, IChess PromotionChoice)
