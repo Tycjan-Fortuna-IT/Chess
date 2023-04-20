@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Chess.Models
+﻿namespace Chess.Models
 {
     public class HistoryManager
     {
