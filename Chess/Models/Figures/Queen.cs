@@ -6,12 +6,10 @@
 
         public ColorEnum Color { get; }
 
-        public System.Drawing.Bitmap Texture { get; }
-
         public bool HasMoved { get; set; }
 
         /// <summary>
-        ///     List contatining all allowed moves that Queen can do.
+        ///     List containing all allowed moves that Queen can do.
         /// </summary>
         private readonly List<Tuple<int, int>> AllowedMovePatterns = new List<Tuple<int, int>>
         {
@@ -28,9 +26,6 @@
         public Queen(ColorEnum Color)
         {
             this.Color = Color;
-
-            this.Texture = Color == ColorEnum.White ?
-                Properties.Resources.QueenWhite : Properties.Resources.QueenBlack;
 
             this.HasMoved = false;
         }

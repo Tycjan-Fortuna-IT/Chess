@@ -6,8 +6,6 @@
 
         public ColorEnum Color { get; }
 
-        public System.Drawing.Bitmap Texture { get; }
-
         public bool HasMoved { get; set; }
 
         /// <summary>
@@ -28,9 +26,6 @@
         public King(ColorEnum Color)
         {
             this.Color = Color;
-
-            this.Texture = Color == ColorEnum.White ?
-                Properties.Resources.KingWhite : Properties.Resources.KingBlack;
 
             this.HasMoved = false;
         }

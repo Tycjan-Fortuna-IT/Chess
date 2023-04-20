@@ -73,10 +73,5 @@ namespace Chess.Models
             ));
         }
 
-        [Obsolete]
-        public void ApplyMoves(IBoard Board)
-        {
-
-        }
     }
 }

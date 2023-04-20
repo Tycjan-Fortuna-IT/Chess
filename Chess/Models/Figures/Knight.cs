@@ -1,4 +1,6 @@
-﻿namespace Chess.Models
+﻿using System.Diagnostics;
+
+namespace Chess.Models
 {
     public class Knight : IChess
     {
@@ -6,12 +8,10 @@
 
         public ColorEnum Color { get; }
 
-        public System.Drawing.Bitmap Texture { get; }
-
         public bool HasMoved { get; set; }
 
         /// <summary>
-        ///     List contatining all allowed moves that Knight can do.
+        ///     List containing all allowed moves that Knight can do.
         /// </summary>
         private readonly List<Tuple<int, int>> AllowedMovePatterns = new List<Tuple<int, int>>
         {
@@ -28,9 +28,6 @@
         public Knight(ColorEnum Color)
         { 
             this.Color = Color;
-
-            this.Texture = Color == ColorEnum.White ?
-                Properties.Resources.KnightWhite : Properties.Resources.KnightBlack;
 
             this.HasMoved = false;
         }

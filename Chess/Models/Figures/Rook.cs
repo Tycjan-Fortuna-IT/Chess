@@ -6,8 +6,6 @@
 
         public ColorEnum Color { get; }
 
-        public System.Drawing.Bitmap Texture { get; }
-
         public bool HasMoved { get; set; }
 
         /// <summary>
@@ -24,9 +22,6 @@
         public Rook(ColorEnum Color)
         {
             this.Color = Color;
-
-            this.Texture = Color == ColorEnum.White ?
-                Properties.Resources.RookWhite : Properties.Resources.RookBlack;
 
             this.HasMoved = false;
         }

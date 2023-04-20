@@ -1,9 +1,4 @@
-﻿using Chess.Models;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Runtime.ExceptionServices;
-
-namespace Chess.Models
+﻿namespace Chess.Models
 {
     public class Chessboard : IBoard
     {
@@ -59,23 +54,6 @@ namespace Chess.Models
             {
                 if (!Field.IsEmpty())
                     Field.RemoveChess();
-            }
-        }
-
-        /// <summary>
-        ///     Just for the sake of debugging. Prints the board in console terminal.
-        /// </summary>
-        [Obsolete]
-        public void Display()
-        {
-            for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
-            {
-                if (i % WIDTH == 0 && i != 0)
-                {
-                    System.Console.WriteLine(' ');
-                }
-
-                this.Fields[i].Display();
             }
         }
 

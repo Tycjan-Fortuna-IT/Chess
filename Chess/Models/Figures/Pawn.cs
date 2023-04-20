@@ -6,8 +6,6 @@
 
         public ColorEnum Color { get; }
 
-        public System.Drawing.Bitmap Texture { get; }
-
         public bool HasMoved { get; set; }
 
         public bool EnPassantable = false;
@@ -15,9 +13,6 @@
         public Pawn(ColorEnum Color)
         {
             this.Color = Color;
-
-            this.Texture = Color == ColorEnum.White ?
-                Properties.Resources.PawnWhite : Properties.Resources.PawnBlack;
         }
 
         /// <summary>
@@ -27,8 +22,6 @@
         /// <param name="Second">Moved to</param>
         public void MoveEvent(Field First, Field Second)
         {
-            //this.Field.Board.ClearEnPassantable();
-
             if (Math.Abs(Second.PosY - First.PosY) == 2)
                 EnPassantable = true;
 

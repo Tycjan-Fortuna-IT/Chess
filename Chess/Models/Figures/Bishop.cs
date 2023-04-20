@@ -6,12 +6,10 @@
 
         public ColorEnum Color { get; }
 
-        public System.Drawing.Bitmap Texture { get; }
-
         public bool HasMoved { get; set; }
 
         /// <summary>
-        ///     List contatining all allowed moves that Bishop can do.
+        ///     List containing all allowed moves that Bishop can do.
         /// </summary>
         private readonly List<Tuple<int, int>> AllowedMovePatterns = new List<Tuple<int, int>>
         {
@@ -24,9 +22,6 @@
         public Bishop(ColorEnum Color)
         {
             this.Color = Color;
-
-            this.Texture = Color == ColorEnum.White ?
-                Properties.Resources.BishopWhite : Properties.Resources.BishopBlack;
 
             this.HasMoved = false;
         }
