@@ -2,6 +2,11 @@
 {
     public static class AssetManager
     {
+        /// <summary>
+        ///     Returns all needed textures.
+        /// </summary>
+        /// <param name="Tag">Tag of the texture</param>
+        /// <returns>Texture as a bitmap</returns>
         public static System.Drawing.Bitmap GetTextureByTagName(string Tag)
         {
             switch (Tag)

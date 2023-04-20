@@ -77,6 +77,9 @@ namespace ChessGUI
 
             if (LastClicked is null)
             {
+                if (CurrentlyClickedField.IsEmpty())
+                    return;
+
                 if (Board.IsWhiteMove && CurrentlyClickedField.Chess.Color != ColorEnum.White)
                     return;
                 else if (!Board.IsWhiteMove && CurrentlyClickedField.Chess.Color != ColorEnum.Black)
@@ -174,7 +177,7 @@ namespace ChessGUI
 
                     if (!Field.IsEmpty())
                     {
-                        Buttons[i, j].Image = Field.Chess.Texture;
+                        Buttons[i, j].Image = AssetManager.GetTextureByTagName(Field.Chess.ToString() + Field.Chess.Color);
                     }
                 }
             }

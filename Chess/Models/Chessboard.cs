@@ -1,9 +1,4 @@
-﻿using Chess.Models;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Runtime.ExceptionServices;
-
-namespace Chess.Models
+﻿namespace Chess.Models
 {
     public class Chessboard : IBoard
     {
@@ -45,6 +40,9 @@ namespace Chess.Models
             this.InitializeChessboard();
         }
 
+        /// <summary>
+        ///     Fill empty board with defined sets.
+        /// </summary>
         private void InitializeChessboard()
         {
             foreach (FigureSet Set in this.FigureSets.Values)
@@ -53,6 +51,9 @@ namespace Chess.Models
             }
         }
 
+        /// <summary>
+        ///     Remove all figures from the board.
+        /// </summary>
         private void ClearChessboard()
         {
             foreach (Field Field in this.Fields)
@@ -63,27 +64,22 @@ namespace Chess.Models
         }
 
         /// <summary>
-        ///     Just for the sake of debugging. Prints the board in console terminal.
+        ///     Check if specified position is within the boundaries of the board.
         /// </summary>
-        [Obsolete]
-        public void Display()
-        {
-            for (int i = 0; i < AMOUNT_OF_FIELDS; i++)
-            {
-                if (i % WIDTH == 0 && i != 0)
-                {
-                    System.Console.WriteLine(' ');
-                }
-
-                this.Fields[i].Display();
-            }
-        }
-
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        /// <returns>Inside or outside as boolean</returns>
         public bool IsPositionInBounds(int x, int y)
         {
             return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
         }
 
+        /// <summary>
+        ///     Get field from board using x,y coordinates.
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        /// <returns></returns>
         public Field GetField(int x, int y)
         {
             return Fields[x + WIDTH * y];
@@ -137,6 +133,12 @@ namespace Chess.Models
             }
         }
 
+        /// <summary>
+        ///     Check if move was castle and perform operations accordingly to chess's rules.
+        /// </summary>
+        /// <param name="First">Move from field</param>
+        /// <param name="Second">Move to field</param>
+        /// <returns>Color of castled king or null</returns>
         private ColorEnum? HandleCastle(Field First, Field Second)
         {
             if (First.Chess is King && Second.Chess is Rook)
@@ -185,6 +187,12 @@ namespace Chess.Models
             return null;
         }
 
+        /// <summary>
+        ///     Check if move was en passant and perform operations accordingly to chess's rules.
+        /// </summary>
+        /// <param name="First">Move from field</param>
+        /// <param name="Second">Move to field</param>
+        /// <returns>Bool if passant move happened</returns>
         private bool HandleEnPassant(Field First, Field Second)
         {
             if (First.Chess is Pawn && Second.IsEmpty())
@@ -214,6 +222,9 @@ namespace Chess.Models
             return false;
         }
 
+        /// <summary>
+        ///     Clear the ability to use a en passant move.
+        /// </summary>
         private void ClearEnPassantable()
         {
             foreach (Field Field in this.Fields)
@@ -222,6 +233,11 @@ namespace Chess.Models
                         ((Pawn)Field.Chess).EnPassantable = false;
         }
 
+        /// <summary>
+        ///     Check if king is being checked.
+        /// </summary>
+        /// <param name="Color">Color of king to check</param>
+        /// <returns>bool</returns>
         private bool CheckIfKingIsBeingChecked(ColorEnum Color)
         {
             King King = this.GetSpecificKing(Color);
@@ -232,6 +248,11 @@ namespace Chess.Models
             return this.IsFieldBeingAttacked(King.Field, King.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White);
         }
 
+        /// <summary>
+        ///     Check if king is being check-mated.
+        /// </summary>
+        /// <param name="Color">Color of king to check</param>
+        /// <returns>bool</returns>
         public bool CheckIfKingIsCheckmated(ColorEnum Color) 
         {
             Dictionary<IChess, List<Field>> Fields = this.GetLegalMovesForPlayer(Color);
@@ -268,6 +289,11 @@ namespace Chess.Models
             return IsCheckmate;
         }
 
+        /// <summary>
+        ///     Returns king of specified color if present.
+        /// </summary>
+        /// <param name="Color">Color of king to return</param>
+        /// <returns>King reference or null</returns>
         private King? GetSpecificKing(ColorEnum Color)
         {
             foreach (Field Field in this.Fields)
@@ -277,6 +303,12 @@ namespace Chess.Models
             return null;
         }
 
+        /// <summary>
+        ///     Check if certain field if being attacked by figures of specified color.
+        /// </summary>
+        /// <param name="SuspectedField">Field to check</param>
+        /// <param name="Color">Color of attacking figures</param>
+        /// <returns>bool</returns>
         public bool IsFieldBeingAttacked(Field SuspectedField, ColorEnum Color)
         {
             foreach(Field Field in this.Fields)
@@ -322,6 +354,12 @@ namespace Chess.Models
             return false;
         }
 
+        /// <summary>
+        ///     Check if move was performed diagonally.
+        /// </summary>
+        /// <param name="First">Move from field</param>
+        /// <param name="Second">Move to field</param>
+        /// <returns>bool</returns>
         private bool IsDiagonalMove(Field First, Field Second)
         {
             int LenghtX = Math.Abs(Second.PosX - First.PosX);
@@ -330,6 +368,11 @@ namespace Chess.Models
             return LenghtX == LenghtY;
         }
 
+        /// <summary>
+        ///     Returns list of fields that can be used to promote Pawn for given color.
+        /// </summary>
+        /// <param name="Color">Promotion color</param>
+        /// <returns>list of fields</returns>
         public List<Field> GetFieldsForPromotion(ColorEnum Color)
         {
             List<Field> PromotionFields = new List<Field>();
@@ -348,6 +391,12 @@ namespace Chess.Models
             return PromotionFields;
         }
 
+        /// <summary>
+        ///     Returns all legal moves for player of given color. Goes through all pieces that player
+        ///     has placed on the board.
+        /// </summary>
+        /// <param name="Color">Color of player</param>
+        /// <returns>Legal moves</returns>
         public Dictionary<IChess, List<Field>> GetLegalMovesForPlayer(ColorEnum Color)
         {
             Dictionary<IChess, List<Field>> LegalMovesForPlayer = new Dictionary<IChess, List<Field>>();
@@ -368,6 +417,11 @@ namespace Chess.Models
             return LegalMovesForPlayer;
         }
 
+        /// <summary>
+        ///     Promote pawn placed on specified field into chosen option.
+        /// </summary>
+        /// <param name="PromotionField">Specified field to promote</param>
+        /// <param name="PromotionChoice">Figure of choice</param>
         public void PromoteChessTo(Field PromotionField, IChess PromotionChoice)
         {
             if (this.GetFieldsForPromotion(PromotionChoice.Color == ColorEnum.White ? ColorEnum.Black : ColorEnum.White).Contains(PromotionField))

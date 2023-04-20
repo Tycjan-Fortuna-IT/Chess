@@ -17,21 +17,6 @@
             this.PosY = PosY;
         }
 
-        [Obsolete]
-        public void Display()
-        {
-            switch (Chess)
-            {
-                case null: System.Console.Write(' '); break;
-                case Bishop: System.Console.Write('B'); break;
-                case King: System.Console.Write('O'); break;
-                case Knight: System.Console.Write('K'); break;
-                case Pawn: System.Console.Write('P'); break;
-                case Queen: System.Console.Write('Q'); break;
-                case Rook: System.Console.Write('R'); break;
-            }
-        }
-
         /// <summary>
         ///     Attach Chess to the Field.
         /// </summary>
