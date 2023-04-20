@@ -2,6 +2,12 @@
 {
     public class DefaultFigureSet : IFigureSet
     {
+        /// <summary>
+        ///     Fill empty board with predefined preset.
+        /// </summary>
+        /// <param name="Chessboard">Board to be filled</param>
+        /// <param name="Figures">List of figures (will be filled)</param>
+        /// <param name="Color">Color of the preset</param>
         public void Generate(Chessboard Chessboard, List<IChess> Figures, ColorEnum Color)
         {
             if (Color == ColorEnum.White)
@@ -154,6 +160,11 @@
             }
         }
 
+        /// <summary>
+        ///     Get predefined mapped promotion (places where promotion prompt will be displayed).
+        /// </summary>
+        /// <param name="Color">Color for which promotion map should be returned</param>
+        /// <returns>Coordinates of all fields that will invoke promotion</returns>
         public List<Tuple<int, int>> GetPromotionMap(ColorEnum Color)
         {
             if (Color == ColorEnum.White)
@@ -186,6 +197,11 @@
             }
         }
 
+        /// <summary>
+        ///     Get cords of predefined castle structure.
+        /// </summary>
+        /// <param name="Color">Color for which castle map should be returned</param>
+        /// <returns>Cords of predefined castle structure fields</returns>
         public Dictionary<string, List<Tuple<int, int>>> GetCastleFields(ColorEnum Color)
         {
             if (Color == ColorEnum.White)

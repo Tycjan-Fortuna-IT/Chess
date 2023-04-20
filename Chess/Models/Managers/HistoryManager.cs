@@ -4,6 +4,13 @@
     {
         public List<Move> Moves = new List<Move>();
 
+        /// <summary>
+        ///     Register move into history, prepare for export.
+        /// </summary>
+        /// <param name="First">Move from field</param>
+        /// <param name="Second">Move to field</param>
+        /// <param name="Passant">If move was en passant capture</param>
+        /// <param name="CastleColor">If move was castle, then color of king</param>
         public void RegisterMove(Field First, Field Second, bool Passant, ColorEnum? CastleColor)
         {
             if (Passant)
@@ -43,6 +50,11 @@
             }
         }
 
+        /// <summary>
+        ///     Register promotion into history, prepare for export.
+        /// </summary>
+        /// <param name="PromotionField">Where figure was promoted</param>
+        /// <param name="PromotionChoice">To what figure was promoted</param>
         public void RegisterPromotion(Field PromotionField, IChess PromotionChoice)
         {
             Moves.Add(new Move(
@@ -56,6 +68,10 @@
             ));
         }
 
+        /// <summary>
+        ///     Register check into history, prepare for export.
+        /// </summary>
+        /// <param name="Color">Checked king color</param>
         public void RegisterKingCheck(ColorEnum Color)
         {
             Moves.Add(new Move(
