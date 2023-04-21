@@ -1,13 +1,17 @@
-﻿using System.ComponentModel;
-using System.Dynamic;
-
-namespace Chess.Models
+﻿namespace Chess.Models
 {
     public class PGNParser
     {
         private List<string> lines = new List<string>();
 
-        public void Parse(string ReadPath, string WritePath)
+        /// <summary>
+        ///     Parse from the PGN format to TXT. Removes all unnecessary information about the game
+        ///     and compresses games into format one game = one line. Still the national chess notation
+        ///     is preserved.
+        /// </summary>
+        /// <param name="ReadPath">Read PGN file to parse</param>
+        /// <param name="WritePath">Output TXT file</param>
+        public void ParseToTXT(string ReadPath, string WritePath)
         {
             using (StreamReader reader = new StreamReader(ReadPath))
             {
@@ -38,6 +42,7 @@ namespace Chess.Models
                             if (line.Length == 0) break;
 
                             concat += line;
+                            concat += " ";
                         }
 
                         lines.Add(concat);
