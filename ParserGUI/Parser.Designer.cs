@@ -35,6 +35,11 @@
             progressBar1 = new ProgressBar();
             button1 = new Button();
             label1 = new Label();
+            label2 = new Label();
+            button2 = new Button();
+            progressBar2 = new ProgressBar();
+            button3 = new Button();
+            button4 = new Button();
             SuspendLayout();
             // 
             // inputPNGDialog
@@ -92,12 +97,61 @@
             label1.TabIndex = 4;
             label1.Text = "Choose file in PGN chess notation to convert it to a TXT file, where one line is one game";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(37, 125);
+            label2.Name = "label2";
+            label2.Size = new Size(481, 15);
+            label2.TabIndex = 5;
+            label2.Text = "Choose file in TXT chess notation to convert it to a XML file, which stores proper positions.";
+            label2.Click += label2_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(368, 165);
+            button2.Name = "button2";
+            button2.Size = new Size(86, 23);
+            button2.TabIndex = 9;
+            button2.Text = "Parse";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // progressBar2
+            // 
+            progressBar2.Location = new Point(85, 212);
+            progressBar2.Name = "progressBar2";
+            progressBar2.Size = new Size(369, 23);
+            progressBar2.TabIndex = 8;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(230, 165);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 7;
+            button3.Text = "Output";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(85, 165);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 6;
+            button4.Text = "Input";
+            button4.UseVisualStyleBackColor = true;
+            // 
             // Parser
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(541, 145);
+            ClientSize = new Size(541, 258);
+            Controls.Add(button2);
+            Controls.Add(progressBar2);
+            Controls.Add(button3);
+            Controls.Add(button4);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button1);
             Controls.Add(progressBar1);
@@ -118,5 +172,10 @@
         private ProgressBar progressBar1;
         private Button button1;
         private Label label1;
+        private Label label2;
+        private Button button2;
+        private ProgressBar progressBar2;
+        private Button button3;
+        private Button button4;
     }
 }

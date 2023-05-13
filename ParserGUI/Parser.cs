@@ -56,7 +56,7 @@ namespace ParserGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.parser.Parse(this.InputPath, this.OutputPath);
+            this.parser.ParseToTXT(this.InputPath, this.OutputPath);
 
             this.progressBar1.Value += 34;
 
@@ -69,6 +69,11 @@ namespace ParserGUI
         }
 
         private void progressBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
