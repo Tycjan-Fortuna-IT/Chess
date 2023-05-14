@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessTests", "ChessTests\Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGUI", "ChessGUI\ChessGUI.csproj", "{BB801455-DFCA-4818-A3F9-C5957A821F35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserGUI", "ParserGUI\ParserGUI.csproj", "{6F73D8A7-CFFE-4B6F-ACD8-5669986F85EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParserGUI", "ParserGUI\ParserGUI.csproj", "{6F73D8A7-CFFE-4B6F-ACD8-5669986F85EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{715DE559-6A96-477A-AE23-3EA2D8EFB368}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6F73D8A7-CFFE-4B6F-ACD8-5669986F85EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F73D8A7-CFFE-4B6F-ACD8-5669986F85EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F73D8A7-CFFE-4B6F-ACD8-5669986F85EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{715DE559-6A96-477A-AE23-3EA2D8EFB368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{715DE559-6A96-477A-AE23-3EA2D8EFB368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{715DE559-6A96-477A-AE23-3EA2D8EFB368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{715DE559-6A96-477A-AE23-3EA2D8EFB368}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
